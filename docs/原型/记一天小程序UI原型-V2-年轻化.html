@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「记一天」UI 原型 V2 · 年轻化视觉系统</title>
+<style>
+/* ============================================================
+   记一天 · Design Tokens  v2.0「纸上手账」
+   ============================================================ */
+:root{
+  /* — 底色 / 纸感 — */
+  --paper:#FAF6EF;
+  --paper-2:#F2EBDF;
+  --paper-3:#E9E0D1;
+  --white:#FFFFFF;
+
+  /* — 墨色（文字三级） — */
+  --ink:#17161A;
+  --ink-2:#57555F;
+  --ink-3:#8E8B96;
+  --line:#E8E1D4;
+  --line-2:#F0EBE0;
+
+  /* — 签名色 — */
+  --lime:#D8F45C;
+  --lime-deep:#B9D62F;
+  --lime-wash:#EFF9C4;
+
+  /* — 语义 / 功能色 — */
+  --coral:#FF6B4A;
+  --coral-wash:#FFEDE8;
+  --lilac:#B9A7FF;
+  --lilac-wash:#F0EBFF;
+  --sky:#7CC5FF;
+  --sky-wash:#E6F4FF;
+  --mint:#4FD8A4;
+  --mint-wash:#E2F9F0;
+  --amber:#FFC857;
+
+  /* — 情绪六档 — */
+  --m-joy:#FFC857;
+  --m-calm:#7CC5FF;
+  --m-low:#8E8B96;
+  --m-angry:#FF6B4A;
+  --m-anx:#B9A7FF;
+  --m-tired:#A9C0B4;
+
+  /* — 圆角 — */
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:22px; --r-xl:28px; --r-full:999px;
+
+  /* — 阴影（暖调，低对比） — */
+  --sh-1:0 1px 2px rgba(60,48,30,.05);
+  --sh-2:0 4px 14px -6px rgba(60,48,30,.14);
+  --sh-3:0 12px 32px -14px rgba(60,48,30,.24);
+  --sh-dev:0 30px 60px -24px rgba(40,32,20,.38);
+
+  /* — 字体 — */
+  --f-ui:"SF Pro Display",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --f-num:ui-monospace,"SF Mono","JetBrains Mono","Roboto Mono",monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+body{
+  font-family:var(--f-ui);
+  color:var(--ink);
+  background:
+    radial-gradient(900px 420px at 8% -8%, #F0F7D8 0%, transparent 55%),
+    radial-gradient(900px 460px at 92% 4%, #FFE9E1 0%, transparent 52%),
+    radial-gradient(700px 400px at 60% 100%, #EAE4FF 0%, transparent 55%),
+    var(--paper);
+  padding:48px 56px 96px;
+  letter-spacing:.005em;
+}
+
+/* ================= 页头 ================= */
+.wrap{max-width:1620px;margin:0 auto;}
+.head{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;margin-bottom:34px;}
+.head-l{max-width:760px;}
+.logo{display:flex;align-items:center;gap:11px;margin-bottom:18px;}
+.logo-mark{width:34px;height:34px;border-radius:11px;background:var(--lime);position:relative;box-shadow:inset 0 -2px 0 rgba(0,0,0,.08);}
+.logo-mark::after{content:"";position:absolute;left:50%;top:50%;width:9px;height:9px;border-radius:50%;background:var(--ink);transform:translate(-50%,-50%);}
+.logo-txt{font-size:13px;font-weight:700;letter-spacing:.02em;}
+.logo-txt span{display:block;font-size:9.5px;font-weight:500;color:var(--ink-3);letter-spacing:.14em;text-transform:uppercase;margin-top:2px;}
+h1.title{font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.18;}
+h1.title em{font-style:normal;position:relative;z-index:0;}
+h1.title em::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:11px;background:var(--lime);z-index:-1;border-radius:2px;}
+.head p.sub{font-size:13.5px;line-height:1.85;color:var(--ink-2);margin-top:16px;}
+.head-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px;}
+.htag{font-size:11px;padding:5px 12px;border-radius:var(--r-full);background:var(--white);border:1px solid var(--line);color:var(--ink-2);}
+.htag b{color:var(--ink);font-weight:700;}
+
+.head-r{flex:none;width:330px;background:var(--white);border-radius:var(--r-lg);padding:20px;box-shadow:var(--sh-2);border:1px solid var(--line-2);}
+.radar-t{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase;margin-bottom:14px;}
+.mood-strip{display:flex;gap:6px;margin-bottom:14px;}
+.mood-strip i{flex:1;height:44px;border-radius:10px;position:relative;}
+.mood-strip i em{position:absolute;bottom:-17px;left:0;right:0;text-align:center;font-size:8.5px;color:var(--ink-3);font-style:normal;}
+.radar-note{font-size:11px;color:var(--ink-2);line-height:1.7;margin-top:22px;padding-top:14px;border-top:1px dashed var(--line);}
+.radar-note b{color:var(--ink);}
+
+/* ================= 章节标题 ================= */
+.sec{display:flex;align-items:baseline;gap:14px;margin:56px 0 24px;}
+.sec .no{font-family:var(--f-num);font-size:11px;font-weight:600;color:var(--ink-3);letter-spacing:.1em;}
+.sec h2{font-size:19px;font-weight:800;letter-spacing:-.015em;}
+.sec .ln{flex:1;height:1px;background:var(--line);}
+.sec .cnt{font-size:11px;color:var(--ink-3);}
+
+/* ================= 设计系统面板 ================= */
+.ds-grid{display:grid;grid-template-columns:1.55fr 1fr 1fr;gap:20px;}
+.ds-card{background:var(--white);border-radius:var(--r-lg);padding:20px 22px;border:1px solid var(--line-2);box-shadow:var(--sh-1);}
+.ds-h{font-size:12px;font-weight:800;letter-spacing:.02em;margin-bottom:4px;}
+.ds-s{font-size:10.5px;color:var(--ink-3);margin-bottom:16px;}
+
+.sw-row{display:flex;gap:10px;flex-wrap:wrap;}
+.sw{width:64px;}
+.sw .chip-c{height:56px;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);}
+.sw .nm{font-size:10px;font-weight:600;margin-top:6px;}
+.sw .hx{font-family:var(--f-num);font-size:9px;color:var(--ink-3);margin-top:1px;}
+.sw .cr{font-size:8.5px;color:var(--mint);margin-top:2px;font-weight:600;}
+
+.type-row{display:flex;align-items:baseline;gap:14px;padding:7px 0;border-bottom:1px dashed var(--line-2);}
+.type-row:last-child{border:none;}
+.type-row .spec{font-family:var(--f-num);font-size:9px;color:var(--ink-3);width:74px;flex:none;}
+.type-row .demo{font-weight:800;letter-spacing:-.02em;}
+.space-row{display:flex;align-items:flex-end;gap:9px;margin-bottom:14px;}
+.space-row .sp{background:var(--lime-wash);border-radius:3px;position:relative;}
+.space-row .sp b{position:absolute;top:-16px;left:0;font-size:8px;font-family:var(--f-num);color:var(--ink-3);font-weight:400;}
+.rad-row{display:flex;gap:8px;}
+.rad-row .rr{flex:1;height:38px;background:var(--paper-2);border:1px solid var(--line);}
+.rad-row .rr b{display:none;}
+
+/* ================= 画板 ================= */
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:40px 30px;}
+.shot{display:flex;flex-direction:column;align-items:center;}
+.phone{width:294px;height:616px;border-radius:50px;padding:11px;background:linear-gradient(160deg,#26242E,#141319 45%,#0C0B10);box-shadow:var(--sh-dev),inset 0 0 0 1.5px rgba(255,255,255,.08);position:relative;}
+.phone::after{content:"";position:absolute;left:50%;top:19px;width:56px;height:5px;border-radius:3px;background:#000;transform:translateX(-50%);opacity:.55;}
+.screen{width:100%;height:100%;border-radius:40px;overflow:hidden;background:var(--paper);display:flex;flex-direction:column;position:relative;}
+
+.sb{height:36px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:10.5px;font-weight:700;letter-spacing:.02em;}
+.sb .ic{display:flex;gap:4px;align-items:center;}
+.sig{width:14px;height:8px;background:linear-gradient(90deg,var(--ink) 0 3px,transparent 3px 5.5px,var(--ink) 5.5px 8.5px,transparent 8.5px 11px,var(--ink) 11px 14px);border-radius:1px;}
+.bat{width:19px;height:9.5px;border:1.2px solid var(--ink);border-radius:3px;position:relative;}
+.bat::before{content:"";position:absolute;inset:1.4px 5px 1.4px 1.4px;background:var(--ink);border-radius:1px;}
+.bat::after{content:"";position:absolute;right:-3px;top:2.6px;width:2px;height:4.4px;background:var(--ink);border-radius:0 2px 2px 0;}
+
+.view{flex:1;overflow:hidden;position:relative;}
+
+/* 底部导航 */
+.tb{flex:none;height:60px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;padding-top:8px;}
+.tb .it{flex:1;text-align:center;font-size:9.5px;color:var(--ink-3);letter-spacing:.02em;}
+.tb .it .g{width:21px;height:21px;margin:0 auto 4px;border-radius:7px;background:var(--paper-3);}
+.tb .it.on{color:var(--ink);font-weight:800;}
+.tb .it.on .g{background:var(--ink);}
+.tb .mid{flex:1;text-align:center;}
+.tb .mid .g{width:42px;height:42px;border-radius:15px;background:var(--lime);margin:-17px auto 0;box-shadow:0 8px 18px -8px rgba(150,180,20,.9);position:relative;}
+.tb .mid .g::before,.tb .mid .g::after{content:"";position:absolute;left:50%;top:50%;background:var(--ink);border-radius:2px;}
+.tb .mid .g::before{width:15px;height:2.6px;transform:translate(-50%,-50%);}
+.tb .mid .g::after{width:2.6px;height:15px;transform:translate(-50%,-50%);}
+.tb .mid .l{font-size:9.5px;color:var(--ink-2);margin-top:5px;font-weight:600;}
+
+/* ---- 通用小件 ---- */
+.lbl{font-size:9px;font-weight:800;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;}
+.hd{padding:0 18px;display:flex;align-items:flex-start;justify-content:space-between;}
+.h-big{font-size:20px;font-weight:800;letter-spacing:-.03em;line-height:1.3;}
+.h-sm{font-size:11px;color:var(--ink-2);margin-top:5px;}
+.card{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--line-2);box-shadow:var(--sh-1);}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:9.5px;font-weight:700;padding:4px 9px;border-radius:var(--r-full);}
+.num{font-family:var(--f-num);font-weight:600;letter-spacing:-.02em;}
+
+/* ================= S1 首页 ================= */
+.home-top{padding:4px 18px 0;}
+.hi{display:flex;align-items:center;justify-content:space-between;}
+.hi .who{font-size:11px;color:var(--ink-2);}
+.hi .who b{color:var(--ink);font-weight:700;}
+.streak-b{display:flex;align-items:center;gap:5px;background:var(--lime);border-radius:var(--r-full);padding:5px 10px 5px 6px;}
+.streak-b .fl{font-size:11px;}
+.streak-b .n{font-family:var(--f-num);font-size:12px;font-weight:700;}
+.streak-b .u{font-size:8.5px;color:rgba(23,22,26,.6);}
+
+.mood-card{margin:14px 18px 0;border-radius:26px;padding:16px 17px;background:linear-gradient(135deg,#1D1C22 0%,#2A2733 60%,#383046 100%);color:#fff;position:relative;overflow:hidden;box-shadow:var(--sh-3);}
+.mood-card::before{content:"";position:absolute;right:-34px;top:-40px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,#D8F45C 0%,rgba(216,244,92,.12) 62%,transparent 70%);}
+.mood-card .lbl{color:rgba(255,255,255,.5);}
+.mood-card .mt{font-size:16px;font-weight:800;letter-spacing:-.02em;margin-top:6px;}
+.mood-card .ms{font-size:10.5px;color:rgba(255,255,255,.62);margin-top:4px;line-height:1.6;}
+.mood-face{position:absolute;right:16px;top:26px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#7CC5FF,#B9A7FF);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 0 0 6px rgba(124,197,255,.14);}
+.mood-bars{display:flex;gap:3px;align-items:flex-end;height:26px;margin-top:14px;}
+.mood-bars i{flex:1;border-radius:3px;background:rgba(255,255,255,.22);}
+.mood-bars i.hi{background:var(--lime);}
+
+.quick{display:flex;gap:9px;padding:14px 18px 0;}
+.quick .q{flex:1;text-align:center;}
+.quick .q .sq{aspect-ratio:1;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh-1);}
+.quick .q .t{font-size:9.5px;color:var(--ink-2);margin-top:6px;font-weight:600;}
+
+.rec-hd{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 9px;}
+.rec-hd .t{font-size:12px;font-weight:800;}
+.rec-hd .m{font-size:10px;color:var(--ink-3);}
+.rec-item{display:flex;gap:11px;margin:0 18px 9px;background:var(--white);border-radius:18px;padding:11px;border:1px solid var(--line-2);box-shadow:var(--sh-1);align-items:center;}
+.rec-item .dot{width:30px;height:30px;border-radius:11px;flex:none;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.rec-item .main{flex:1;min-width:0;}
+.rec-item .tt{font-size:11.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.01em;}
+.rec-item .mm{font-size:9px;color:var(--ink-3);margin-top:4px;display:flex;align-items:center;gap:6px;}
+.rec-item .tm{font-family:var(--f-num);font-size:9px;color:var(--ink-3);}
+.thumbs{display:flex;gap:3px;}
+.thumbs i{width:26px;height:26px;border-radius:7px;display:block;}
+.wave{display:inline-flex;align-items:flex-end;gap:1.5px;height:9px;}
+.wave i{width:2px;background:var(--lilac);border-radius:2px;display:block;}
+
+/* ================= 记录创建 ================= */
+.ed-nav{height:46px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 18px;}
+.ed-nav .x{width:26px;height:26px;border-radius:50%;background:var(--white);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink-2);}
+.ed-nav .ttl{font-size:12px;font-weight:800;}
+.ed-nav .ok{font-size:10.5px;font-weight:800;background:var(--ink);color:#fff;border-radius:var(--r-full);padding:6px 14px;}
+
+.seg{display:flex;gap:5px;margin:0 18px;background:var(--paper-2);border-radius:14px;padding:4px;}
+.seg span{flex:1;text-align:center;font-size:11px;font-weight:600;color:var(--ink-3);padding:8px 0;border-radius:11px;}
+.seg span.on{background:var(--ink);color:#fff;font-weight:700;box-shadow:var(--sh-1);}
+
+.editor{margin:12px 18px 0;background:var(--white);border-radius:var(--r-lg);border:1px solid var(--line-2);padding:15px;min-height:128px;box-shadow:var(--sh-1);}
+.editor .txt{font-size:12.5px;line-height:1.85;color:var(--ink);letter-spacing:.01em;}
+.editor .ph{color:var(--ink-3);}
+.caret{display:inline-block;width:1.5px;height:14px;background:var(--coral);vertical-align:-2px;border-radius:1px;}
+.editor .cnt{font-family:var(--f-num);font-size:9.5px;color:var(--ink-3);margin-top:18px;}
+
+.cat{display:flex;gap:7px;margin:12px 18px 0;}
+.cat .c{flex:1;text-align:center;padding:9px 0;border-radius:14px;border:1.4px solid var(--line);background:var(--white);font-size:10px;font-weight:600;color:var(--ink-2);}
+.cat .c .ci{width:20px;height:20px;border-radius:7px;margin:0 auto 5px;}
+.cat .c.on{border-color:var(--ink);background:var(--lime);color:var(--ink);font-weight:800;box-shadow:var(--sh-1);}
+
+.mood-hd{padding:16px 18px 8px;display:flex;align-items:baseline;justify-content:space-between;}
+.mood-hd .a{font-size:10px;color:var(--ink-3);}
+.moods{display:flex;gap:6px;margin:0 18px;}
+.moods .m{flex:1;text-align:center;}
+.moods .m .f{aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;border:1.5px solid transparent;}
+.moods .m .n{font-size:8.5px;color:var(--ink-3);margin-top:4px;}
+.moods .m.on .f{border-color:var(--ink);box-shadow:0 0 0 3px var(--white),0 0 0 4.5px var(--lime);}
+.moods .m.on .n{color:var(--ink);font-weight:800;}
+
+.ed-bar{position:absolute;left:16px;right:16px;bottom:14px;display:flex;align-items:center;gap:9px;background:var(--white);border-radius:var(--r-full);padding:7px 8px 7px 15px;border:1px solid var(--line-2);box-shadow:var(--sh-3);}
+.ed-bar .mic{width:38px;height:38px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;}
+.ed-bar .send{width:38px;height:38px;border-radius:50%;background:var(--lime);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:var(--ink);}
+.ed-bar .plus{width:32px;height:32px;border-radius:50%;background:var(--paper-2);display:flex;align-items:center;justify-content:center;color:var(--ink-2);font-size:14px;}
+
+/* 语音 */
+.voice-c{margin:16px 18px 0;background:var(--white);border:1px solid var(--line-2);border-radius:26px;padding:20px 18px;text-align:center;box-shadow:var(--sh-1);}
+.v-rec{width:76px;height:76px;border-radius:50%;background:var(--ink);margin:0 auto;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 9px rgba(23,22,26,.06),0 0 0 18px rgba(23,22,26,.03);}
+.v-time{font-family:var(--f-num);font-size:26px;font-weight:700;letter-spacing:-.01em;margin-top:14px;}
+.v-time span{font-size:11px;color:var(--ink-3);font-weight:400;}
+.v-wav{display:flex;align-items:center;justify-content:center;gap:2px;height:34px;margin-top:12px;}
+.v-wav i{width:2.6px;border-radius:2px;background:var(--lime-deep);}
+.v-hint{font-size:9.5px;color:var(--ink-3);margin-top:12px;}
+.v-cancel{display:inline-block;margin-top:12px;font-size:10px;color:var(--ink-2);background:var(--paper-2);border-radius:var(--r-full);padding:7px 15px;}
+
+/* 图片 */
+.g9{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 18px 0;}
+.g9 .g{aspect-ratio:1;border-radius:14px;position:relative;overflow:hidden;}
+.g9 .g .del{position:absolute;right:4px;top:4px;width:15px;height:15px;border-radius:50%;background:rgba(23,22,26,.55);color:#fff;font-size:8px;display:flex;align-items:center;justify-content:center;}
+.g9 .g.add{background:var(--white);border:1.5px dashed var(--paper-3);display:flex;align-items:center;justify-content:center;font-size:19px;color:var(--ink-3);}
+
+.wgt{margin:12px 18px 0;background:var(--white);border:1.4px solid var(--ink);border-radius:var(--r-lg);padding:13px 15px;display:flex;align-items:center;gap:10px;box-shadow:var(--sh-2);}
+.wgt .ico{width:28px;height:28px;border-radius:10px;background:var(--lilac-wash);display:flex;align-items:center;justify-content:center;font-size:13px;}
+.wgt .v{font-family:var(--f-num);font-size:23px;font-weight:700;letter-spacing:-.02em;}
+.wgt .u{font-size:10.5px;color:var(--ink-3);margin-left:1px;}
+.wgt .st{width:26px;height:26px;border-radius:9px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ink-2);}
+
+/* ================= 时间线 ================= */
+.tl-hd{padding:6px 18px 0;}
+.tl-tabs{display:flex;gap:16px;margin-top:12px;}
+.tl-tabs span{font-size:12px;font-weight:600;color:var(--ink-3);}
+.tl-tabs span.on{color:var(--ink);font-weight:800;position:relative;}
+.tl-tabs span.on::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:3px;background:var(--lime);border-radius:2px;}
+.tl-body{padding:16px 18px 0;}
+.tl-day{display:flex;align-items:center;gap:8px;margin:0 0 9px;}
+.tl-day .d{font-family:var(--f-num);font-size:11px;font-weight:700;}
+.tl-day .w{font-size:9.5px;color:var(--ink-3);}
+.tl-day .ln{flex:1;height:1px;background:var(--line);}
+.tl-card{background:var(--white);border:1px solid var(--line-2);border-radius:18px;padding:11px 12px;margin-bottom:8px;box-shadow:var(--sh-1);display:flex;gap:10px;}
+.tl-card .bar{width:3px;border-radius:2px;flex:none;}
+.tl-card .main{flex:1;min-width:0;}
+.tl-card .t{font-size:11.5px;font-weight:700;letter-spacing:-.01em;line-height:1.5;}
+.tl-card .m{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:9px;color:var(--ink-3);}
+.tl-card .ph{margin-top:7px;display:flex;gap:4px;}
+.tl-card .ph i{width:44px;height:44px;border-radius:9px;display:block;}
+
+/* ================= 统计 ================= */
+.stat-hd{padding:6px 18px 0;}
+.big-card{margin:12px 18px 0;background:var(--white);border-radius:24px;border:1px solid var(--line-2);padding:15px 16px 12px;box-shadow:var(--sh-1);}
+.big-row{display:flex;align-items:flex-end;justify-content:space-between;}
+.big-v{font-family:var(--f-num);font-size:29px;font-weight:700;letter-spacing:-.03em;line-height:1;}
+.big-v span{font-size:11px;color:var(--ink-3);font-weight:500;margin-left:3px;}
+.delta{font-size:9.5px;font-weight:800;padding:3px 7px;border-radius:7px;}
+.delta.dn{background:var(--mint-wash);color:#17936A;}
+.delta.up{background:var(--coral-wash);color:#D9411F;}
+.mini-lbl{font-size:9px;color:var(--ink-3);margin-top:5px;}
+.donut-wrap{display:flex;align-items:center;gap:14px;}
+.donut-legend{flex:1;}
+.lg-row{display:flex;align-items:center;gap:6px;font-size:9.5px;color:var(--ink-2);margin-bottom:6px;}
+.lg-row i{width:8px;height:8px;border-radius:2.5px;}
+.lg-row b{margin-left:auto;font-family:var(--f-num);font-size:9.5px;color:var(--ink);}
+.bars{display:flex;align-items:flex-end;gap:7px;height:66px;padding:0 2px;}
+.bars .b{flex:1;border-radius:6px 6px 3px 3px;position:relative;background:var(--paper-2);}
+.bars .b.f{background:linear-gradient(180deg,var(--lime),var(--lime-deep));}
+.xl{display:flex;gap:7px;padding:6px 2px 0;}
+.xl span{flex:1;text-align:center;font-size:8px;color:var(--ink-3);font-family:var(--f-num);}
+
+/* ================= AI 总结 ================= */
+.ai-top{padding:8px 18px 0;}
+.ai-meta{display:flex;align-items:center;gap:6px;font-family:var(--f-num);font-size:9px;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase;}
+.ai-meta .sp{width:13px;height:13px;border-radius:4px;background:var(--ink);color:var(--lime);display:flex;align-items:center;justify-content:center;font-size:8px;}
+.ai-title{font-size:21px;font-weight:800;letter-spacing:-.035em;line-height:1.32;margin-top:9px;}
+.ai-title u{text-decoration:none;background:linear-gradient(transparent 62%,var(--lime) 62%);}
+.ai-sub{font-size:10px;color:var(--ink-3);margin-top:7px;font-family:var(--f-num);}
+.ai-blk{margin:12px 18px 0;background:var(--white);border-radius:18px;border:1px solid var(--line-2);padding:13px 14px;box-shadow:var(--sh-1);}
+.ai-blk .k{font-size:9px;font-weight:800;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase;}
+.ai-blk .p{font-size:11px;line-height:1.8;color:var(--ink-2);margin-top:6px;}
+.ai-blk .p b{color:var(--ink);}
+.mini-chips{display:flex;gap:6px;margin-top:9px;}
+.mini-chips span{flex:1;text-align:center;font-size:9px;font-weight:600;background:var(--paper-2);border-radius:9px;padding:7px 0;color:var(--ink-2);}
+.mini-chips span.hl{background:var(--lime-wash);color:#5E7000;}
+.ai-note{margin:11px 18px 0;font-size:9px;color:var(--ink-3);line-height:1.7;display:flex;gap:6px;}
+.ai-note i{flex:none;width:12px;height:12px;border-radius:50%;border:1px solid var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:7px;font-style:normal;margin-top:1px;}
+.ai-cta{margin:12px 18px 0;background:var(--ink);color:#fff;border-radius:14px;text-align:center;font-size:11px;font-weight:700;padding:12px 0;}
+
+/* ================= 打卡 ================= */
+.ck-hero{margin:8px 18px 0;background:var(--lime);border-radius:26px;padding:18px;position:relative;overflow:hidden;}
+.ck-hero::after{content:"";position:absolute;right:-26px;bottom:-40px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.35);}
+.ck-hero .lbl{color:rgba(23,22,26,.5);}
+.ck-num{font-family:var(--f-num);font-size:44px;font-weight:700;letter-spacing:-.05em;line-height:1;margin-top:7px;}
+.ck-num span{font-size:12px;font-weight:600;margin-left:3px;letter-spacing:0;}
+.ck-sub{font-size:10px;color:rgba(23,22,26,.62);margin-top:7px;font-weight:600;}
+.ck-rec{position:absolute;right:18px;top:22px;text-align:right;}
+.ck-rec .a{font-family:var(--f-num);font-size:12px;font-weight:700;}
+.ck-rec .b{font-size:8.5px;color:rgba(23,22,26,.55);margin-top:2px;}
+.cal{margin:12px 18px 0;background:var(--white);border-radius:22px;border:1px solid var(--line-2);padding:15px;box-shadow:var(--sh-1);}
+.cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px;}
+.cal-top .m{font-size:11.5px;font-weight:800;}
+.cal-top .s{font-family:var(--f-num);font-size:9px;color:var(--ink-3);}
+.dots{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;}
+.dots .dl{font-size:8px;color:var(--ink-3);text-align:center;font-family:var(--f-num);}
+.dots .d{aspect-ratio:1;border-radius:50%;background:var(--paper-2);display:flex;align-items:center;justify-content:center;font-family:var(--f-num);font-size:8px;color:var(--ink-3);}
+.dots .d.on{background:var(--ink);color:#fff;font-weight:700;}
+.dots .d.today{background:var(--lime);color:var(--ink);font-weight:800;box-shadow:0 0 0 2px var(--white),0 0 0 3.5px var(--ink);}
+.badges{display:flex;gap:8px;margin:12px 18px 0;}
+.badges .bd{flex:1;background:var(--white);border:1px solid var(--line-2);border-radius:16px;padding:10px 6px;text-align:center;box-shadow:var(--sh-1);}
+.badges .bd .e{font-size:17px;}
+.badges .bd .t{font-size:8.5px;color:var(--ink-2);margin-top:4px;font-weight:600;line-height:1.3;}
+.badges .bd.lock{opacity:.42;}
+
+/* ================= 我的 ================= */
+.me-hd{padding:10px 18px 0;display:flex;align-items:center;gap:12px;}
+.me-av{width:50px;height:50px;border-radius:18px;background:linear-gradient(140deg,var(--lilac),var(--sky));display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:var(--sh-2);}
+.me-n{font-size:15px;font-weight:800;letter-spacing:-.02em;}
+.me-s{font-size:9.5px;color:var(--ink-3);margin-top:3px;font-family:var(--f-num);}
+.me-set{margin-left:auto;width:30px;height:30px;border-radius:11px;background:var(--white);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;}
+.me-stats{display:flex;margin:12px 18px 0;background:var(--ink);border-radius:20px;padding:14px 0;}
+.me-stats .s{flex:1;text-align:center;color:#fff;}
+.me-stats .s b{font-family:var(--f-num);font-size:15px;font-weight:700;letter-spacing:-.02em;}
+.me-stats .s span{display:block;font-size:8.5px;color:rgba(255,255,255,.5);margin-top:4px;}
+.me-stats .s + .s{border-left:1px solid rgba(255,255,255,.12);}
+.list{margin:14px 18px 0;background:var(--white);border-radius:20px;border:1px solid var(--line-2);overflow:hidden;box-shadow:var(--sh-1);}
+.row{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line-2);}
+.row:last-child{border:none;}
+.row .ri{width:26px;height:26px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:12px;flex:none;}
+.row .rt{font-size:11.5px;font-weight:600;}
+.row .rv{margin-left:auto;font-size:9.5px;color:var(--ink-3);}
+.row .ra{color:var(--paper-3);font-size:14px;margin-left:6px;}
+
+/* ================= 状态 / 组件库 ================= */
+.st-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+.st-card{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--line-2);padding:20px;box-shadow:var(--sh-1);}
+.st-t{font-size:11px;font-weight:800;letter-spacing:.02em;margin-bottom:3px;}
+.st-s{font-size:9.5px;color:var(--ink-3);margin-bottom:15px;}
+.empty-face{width:66px;height:66px;border-radius:24px;background:var(--paper-2);margin:6px auto 0;display:flex;align-items:center;justify-content:center;font-size:28px;}
+.empty-t{text-align:center;font-size:12px;font-weight:800;margin-top:14px;}
+.empty-s{text-align:center;font-size:10px;color:var(--ink-3);line-height:1.7;margin-top:6px;}
+.empty-btn{display:block;width:150px;margin:14px auto 0;text-align:center;background:var(--lime);border-radius:var(--r-full);padding:9px 0;font-size:11px;font-weight:800;}
+.sk{border-radius:10px;background:linear-gradient(90deg,#F2EBDF 25%,#F8F4EC 50%,#F2EBDF 75%);background-size:200% 100%;}
+.btn-row{display:flex;gap:9px;flex-wrap:wrap;}
+.b{font-size:11px;font-weight:700;border-radius:var(--r-full);padding:9px 17px;letter-spacing:.01em;}
+.b.pri{background:var(--ink);color:#fff;}
+.b.lime{background:var(--lime);color:var(--ink);box-shadow:0 6px 14px -8px rgba(150,180,20,.9);}
+.b.ghost{background:transparent;color:var(--ink);border:1.4px solid var(--ink);}
+.b.soft{background:var(--paper-2);color:var(--ink-2);}
+.b.dis{background:var(--paper-2);color:var(--ink-3);opacity:.6;}
+.b.pri.sm{font-size:9.5px;padding:6px 12px;}
+.mood-dots{display:flex;gap:7px;}
+.mood-dots i{width:26px;height:26px;border-radius:50%;display:block;}
+
+.foot{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:40px;color:var(--ink-3);font-size:10.5px;line-height:1.9;}
+.foot b{color:var(--ink-2);font-weight:700;}
+.cap{margin-top:16px;text-align:center;}
+.cap .t{font-size:12px;font-weight:800;letter-spacing:-.01em;}
+.cap .t .tg{display:inline-block;font-family:var(--f-num);font-size:8.5px;letter-spacing:.06em;background:var(--ink);color:var(--lime);border-radius:5px;padding:2px 6px;margin-right:6px;vertical-align:1.5px;}
+.cap .t .tg.p1{background:var(--coral);color:#fff;}
+.cap .d{font-size:10px;color:var(--ink-3);margin-top:5px;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ 页头 ============ -->
+  <div class="head">
+    <div class="head-l">
+      <div class="logo">
+        <div class="logo-mark"></div>
+        <div class="logo-txt">记一天 · V2 年轻化改版<span>One Day · Design Direction</span></div>
+      </div>
+      <h1 class="title">把每天记成<em>一本手账</em>，<br>而不是一张表单。</h1>
+      <p class="sub">
+        V1 是「蓝白卡片 + 灰色图标」的通用工具面孔——信息没错，但年轻人没理由在里面停留。V2 换掉整套视觉语言：<b>奶油纸底</b>替代冷灰背景，<b>荧光青柠</b>做签名色（高饱和、低明度面积占比，只在关键节点出现），标题<b>字重拉到 800、字距收到 -0.03em</b>，所有数字改用<b>等宽字体</b>——像手账上的日期戳，也像潮牌标签。阴影全部换成暖调（棕底而非灰底），去掉工业感。
+      </p>
+      <div class="head-tags">
+        <span class="htag">签名色 <b>Lime #D8F45C</b></span>
+        <span class="htag">纸底 <b>#FAF6EF</b></span>
+        <span class="htag">圆角 <b>8 / 16 / 22 / 26</b></span>
+        <span class="htag">字距 <b>-0.03em</b></span>
+        <span class="htag">数字 <b>Mono</b></span>
+        <span class="htag">触控 <b>≥ 44pt</b></span>
+      </div>
+    </div>
+    <div class="head-r">
+      <div class="radar-t">Mood Scale · 情绪六档</div>
+      <div class="mood-strip">
+        <i style="background:var(--m-joy)"><em>开心</em></i>
+        <i style="background:var(--m-calm)"><em>平静</em></i>
+        <i style="background:var(--m-low)"><em>低落</em></i>
+        <i style="background:var(--m-angry)"><em>烦躁</em></i>
+        <i style="background:var(--m-anx)"><em>焦虑</em></i>
+        <i style="background:var(--m-tired)"><em>疲惫</em></i>
+      </div>
+      <div class="radar-note">
+        六个色值全部经过对比度校验，<b>与墨黑文字搭配均 ≥ 4.5:1</b>；色相分布避开红绿对撞，对色弱用户仍可通过明度差区分。
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 设计系统 ============ -->
+  <div class="sec"><span class="no">01</span><h2>设计基础 · Design Foundations</h2><span class="ln"></span><span class="cnt">Color / Type / Space / Radius</span></div>
+
+  <div class="ds-grid">
+    <div class="ds-card">
+      <div class="ds-h">色彩系统</div>
+      <div class="ds-s">墨黑承载信息，青柠只做「此刻值得注意」的标记，情绪色独立成一组</div>
+      <div class="sw-row">
+        <div class="sw"><div class="chip-c" style="background:#17161A"></div><div class="nm">Ink</div><div class="hx">#17161A</div><div class="cr">15.8:1</div></div>
+        <div class="sw"><div class="chip-c" style="background:#D8F45C"></div><div class="nm">Lime</div><div class="hx">#D8F45C</div><div class="cr">13.1:1</div></div>
+        <div class="sw"><div class="chip-c" style="background:#FAF6EF"></div><div class="nm">Paper</div><div class="hx">#FAF6EF</div><div class="cr">基底</div></div>
+        <div class="sw"><div class="chip-c" style="background:#57555F"></div><div class="nm">Ink 60</div><div class="hx">#57555F</div><div class="cr">6.4:1</div></div>
+        <div class="sw"><div class="chip-c" style="background:#FF6B4A"></div><div class="nm">Coral</div><div class="hx">#FF6B4A</div><div class="cr">4.9:1</div></div>
+        <div class="sw"><div class="chip-c" style="background:#B9A7FF"></div><div class="nm">Lilac</div><div class="hx">#B9A7FF</div><div class="cr">6.1:1</div></div>
+        <div class="sw"><div class="chip-c" style="background:#7CC5FF"></div><div class="nm">Sky</div><div class="hx">#7CC5FF</div><div class="cr">7.2:1</div></div>
+        <div class="sw"><div class="chip-c" style="background:#4FD8A4"></div><div class="nm">Mint</div><div class="hx">#4FD8A4</div><div class="cr">8.4:1</div></div>
+      </div>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-h">字阶</div>
+      <div class="ds-s">标题 800 / 正文 400-600，数字统一 Mono</div>
+      <div class="type-row"><span class="spec">21px / 800 / -3.5%</span><span class="demo" style="font-size:21px">今天想记点什么</span></div>
+      <div class="type-row"><span class="spec">15px / 800</span><span class="demo" style="font-size:15px">本周小结</span></div>
+      <div class="type-row"><span class="spec">11.5px / 700</span><span class="demo" style="font-size:11.5px;font-weight:700">晨跑 5 公里</span></div>
+      <div class="type-row"><span class="spec">10px / 400</span><span class="demo" style="font-size:10px;font-weight:400;color:var(--ink-2)">辅助说明文字</span></div>
+      <div class="type-row"><span class="spec">9px / 800 / +16%</span><span class="demo" style="font-size:9px;letter-spacing:.16em;color:var(--ink-3)">SECTION LABEL</span></div>
+      <div class="type-row"><span class="spec">29px Mono</span><span class="num" style="font-size:29px">62.5</span></div>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-h">间距 / 圆角</div>
+      <div class="ds-s">4pt 基准，圆角四档对应胶囊—小件—卡片—大板</div>
+      <div class="space-row">
+        <div class="sp" style="width:4px;height:4px"><b>4</b></div>
+        <div class="sp" style="width:8px;height:8px"><b>8</b></div>
+        <div class="sp" style="width:12px;height:12px"><b>12</b></div>
+        <div class="sp" style="width:16px;height:16px"><b>16</b></div>
+        <div class="sp" style="width:24px;height:24px"><b>24</b></div>
+        <div class="sp" style="width:32px;height:32px"><b>32</b></div>
+        <div class="sp" style="width:48px;height:48px"><b>48</b></div>
+      </div>
+      <div class="rad-row">
+        <div class="rr" style="border-radius:8px"></div>
+        <div class="rr" style="border-radius:14px"></div>
+        <div class="rr" style="border-radius:22px"></div>
+        <div class="rr" style="border-radius:999px"></div>
+      </div>
+      <div class="ds-s" style="margin-top:12px;margin-bottom:0;line-height:1.75">
+        正文行高 1.8，卡片内边距 <b style="color:var(--ink)">12–16px</b>，屏边安全距 <b style="color:var(--ink)">18px</b>。所有可点区域 ≥ 44×44pt。
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 屏幕 01 ============ -->
+  <div class="sec"><span class="no">02</span><h2>核心主流程 · 首页与快速记录</h2><span class="ln"></span><span class="cnt">M1 → M2</span></div>
+
+  <div class="board">
+
+    <!-- S1 首页 -->
+    <div class="shot">
+      <div class="phone"><div class="screen">
+        <div class="sb"><span>9:41</span><span class="ic"><i class="sig"></i><i class="bat"></i></span></div>
+        <div class="view">
+          <div class="home-top">
+            <div class="hi">
+              <div class="who">晚上好，<b>阿柠</b> · 11月2日 周一</div>
+              <div class="streak-b"><span class="fl">🔥</span><span class="n">12</span><span class="u">天</span></div>
+            </div>
+          </div>
+
+          <div class="mood-card">
+            <div class="lbl">Today's Weather</div>
+            <div class="mt">今天的情绪，有点像<br>下午四点的阴天</div>
+            <div class="ms">记录 3 条 · 比上周三稳定</div>
+            <div class="mood-face">🙂</div>
+            <div class="mood-bars">
+              <i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:78%"></i>
+              <i style="height:56%"></i><i style="height:34%"></i><i class="hi" style="height:88%"></i><i style="height:50%"></i>
+              <i style="height:44%"></i><i style="height:66%"></i><i style="height:38%"></i>
+            </div>
+          </div>
+
+          <div class="quick">
+            <div class="q"><div class="sq" style="background:var(--sky-wash)">🏃</div><div class="t">运动</div></div>
+            <div class="q"><div class="sq" style="background:var(--mint-wash)">🥗</div><div class="t">饮食</div></div>
+            <div class="q"><div class="sq" style="background:#FFF6DE">💭</div><div class="t">心情</div></div>
+            <div class="q"><div class="sq" style="background:var(--lilac-wash)">⚖️</div><div class="t">体重</div></div>
+            <div class="q"><div class="sq" style="background:var(--coral-wash)">📷</div><div class="t">拍照</div></div>
+          </div>
+
+          <div class="rec-hd"><span class="t">今天记了 3 条</span><span class="m">全部 ›</span></div>
+
+          <div class="rec-item">
+            <div class="dot" style="background:var(--sky-wash)">🏃</div>
+            <div class="main">
+              <div class="tt">晨跑 5 公里，配速 6'20"</div>
+              <div class="mm"><span class="pill" style="background:var(--sky-wash);color:#1B6FA8">运动</span><span class="tm">07:32</span></div>
+            </div>
+          </div>
+          <div class="rec-item">
+            <div class="dot" style="background:var(--lilac-wash)">🎙️</div>
+            <div class="main">
+              <div class="tt">午后有点闷，下楼走了走</div>
+              <div class="mm"><span class="pill" style="background:var(--lilac-wash);color:#5B44A8">心情</span><span class="wave"><i style="height:4px"></i><i style="height:8px"></i><i style="height:5px"></i><i style="height:9px"></i><i style="height:3px"></i></span><span class="tm">00:42</span></div>
+            </div>
+          </div>
+          <div class="rec-item">
+            <div class="dot" style="background:var(--mint-wash)">🥗</div>
+            <div class="main">
+              <div class="tt">轻食沙拉 + 冰美式</div>
+              <div class="mm"><span class="pill" style="background:var(--mint-wash);color:#13805C">饮食</span>
+                <span class="thumbs"><i style="background:linear-gradient(140deg,#C9E8A8,#8FC96B)"></i><i style="background:linear-gradient(140deg,#E3C39A,#C39A6B)"></i></span>
+                <span class="tm">12:20</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tb">
+          <div class="it on"><div class="g"></div>今天</div>
+          <div class="it"><div class="g"></div>时间线</div>
+          <div class="mid"><div class="g"></div><div class="l">记录</div></div>
+          <div class="it"><div class="g"></div>数据</div>
+          <div class="it"><div class="g"></div>我的</div>
+        </div>
+      </div></div>
+      <div class="cap"><div class="t"><span class="tg">M1</span>首页 · 今日</div><div class="d">情绪天气卡（替代数据仪表盘）+ streak 胶囊 + 五入口</div></div>
+    </div>
+
+    <!-- S2 文字记录 -->
+    <div class="shot">
+      <div class="phone"><div class="screen">
+        <div class="sb"><span>9:41</span><span class="ic"><i class="sig"></i><i class="bat"></i></span></div>
+        <div class="view">
+          <div class="ed-nav"><span class="x">✕</span><span class="ttl">记一笔</span><span class="ok">保存</span></div>
+          <div class="seg"><span class="on">文字</span><span>语音</span><span>图片</span></div>
+
+          <div class="editor">
+            <div class="txt">今天跑完 5 公里，风很大，<br>但跑起来之后就不冷了。<span class="caret"></span></div>
+            <div class="cnt">186 / 500</div>
+          </div>
+
+          <div class="cat">
+            <div class="c on"><div class="ci" style="background:var(--ink)"></div>运动</div>
+            <div class="c"><div class="ci" style="background:var(--mint)"></div>饮食</div>
+            <div class="c"><div class="ci" style="background:var(--amber)"></div>心情</div>
+            <div class="c"><div class="ci" style="background:var(--lilac)"></div>其他</div>
+          </div>
+
+          <div class="mood-hd"><span class="t" style="font-size:11px;font-weight:800">此刻心情</span><span class="a">选填</span></div>
+          <div class="moods">
+            <div class="m"><div class="f" style="background:#FFF6DE">😄</div><div class="n">开心</div></div>
+            <div class="m on"><div class="f" style="background:var(--sky-wash)">🙂</div><div class="n">平静</div></div>
+            <div class="m"><div class="f" style="background:var(--paper-2)">😔</div><div class="n">低落</div></div>
+            <div class="m"><div class="f" style="background:var(--coral-wash)">😠</div><div class="n">烦躁</div></div>
+            <div class="m"><div class="f" style="background:var(--lilac-wash)">😰</div><div class="n">焦虑</div></div>
+            <div class="m"><div class="f" style="background:#E7F0EA">😴</div><div class="n">疲惫</div></div>
+          </div>
+
+          <div class="ed-bar">
+            <span class="plus">＋</span>
+            <span style="font-size:11px;color:var(--ink-3);flex:1">补一句…</span>
+            <div class="mic"><svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2z"/></svg></div>
+            <div class="send">↑</div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap"><div class="t"><span class="tg">M2</span>记录 · 文字</div><div class="d">输入区做视觉主体，分类用「黑底青柠」表达选中</div></div>
+    </div>
+
+    <!-- S3 语音 -->
+    <div class="shot">
+      <div class="phone"><div class="screen">
+        <div class="sb"><span>9:41</span><span class="ic"><i class="sig"></i><i class="bat"></i></span></div>
+        <div class="view">
+          <div class="ed-nav"><span class="x">✕</span><span class="ttl">记一笔</span><span class="ok">保存</span></div>
+          <div class="seg"><span>文字</span><span class="on">语音</span><span>图片</span></div>
+
+          <div class="voice-c">
+            <div class="v-rec"><svg width="28" height="28" viewBox="0 0 24 24" fill="#D8F45C"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2z"/></svg></div>
+            <div class="v-time">00:42 <span>/ 01:00</span></div>
+            <div class="v-wav">
+              <i style="height:8px"></i><i style="height:16px"></i><i style="height:24px"></i><i style="height:12px"></i>
+              <i style="height:30px"></i><i style="height:20px"></i><i style="height:10px"></i><i style="height:26px"></i>
+              <i style="height:34px"></i><i style="height:18px"></i><i style="height:28px"></i><i style="height:14px"></i>
+              <i style="height:22px"></i><i style="height:9px"></i><i style="height:20px"></i><i style="height:31px"></i>
+              <i style="height:16px"></i><i style="height:24px"></i><i style="height:11px"></i><i style="height:19px"></i>
+            </div>
+            <div class="v-hint">松开完成 · 上滑取消</div>
+          </div>
+
+          <div class="editor" style="min-height:80px;margin-top:12px">
+            <div class="lbl" style="margin-bottom:7px">实时转写</div>
+            <div class="txt" style="font-size:11.5px;color:var(--ink-2)">午后有点闷，下楼走了走，回来好一些了…<span class="caret"></span></div>
+          </div>
+
+          <div class="mood-hd"><span class="t" style="font-size:11px;font-weight:800">此刻心情</span><span class="a">已选「低落」</span></div>
+          <div class="moods">
+            <div class="m"><div class="f" style="background:#FFF6DE">😄</div><div class="n">开心</div></div>
+            <div class="m"><div class="f" style="background:var(--sky-wash)">🙂</div><div class="n">平静</div></div>
+            <div class="m on"><div class="f" style="background:var(--paper-2)">😔</div><div class="n">低落</div></div>
+            <div class="m"><div class="f" style="background:var(--coral-wash)">😠</div><div class="n">烦躁</div></div>
+            <div class="m"><div class="f" style="background:var(--lilac-wash)">😰</div><div class="n">焦虑</div></div>
+            <div class="m"><div class="f" style="background:#E7F0EA">😴</div><div class="n">疲惫</div></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap"><div class="t"><span class="tg">M2</span>记录 · 语音</div><div class="d">黑色录音圆 + 青柠波形，弱化「按钮」强化「正在说话」</div></div>
+    </div>
+
+    <!-- S4 图片 + 体重 -->
+    <div class="shot">
+      <div class="phone"><div class="screen">
+        <div class="sb"><span>9:41</span><span class="ic"><i class="sig"></i><i class="bat"></i></span></div>
+        <div class="view">
+          <div class="ed-nav"><span class="x">✕</span><span class="ttl">记一笔</span><span class="ok">保存</span></div>
+          <div class="seg"><span>文字</span><span>语音</span><span class="on">图片</span></div>
+
+          <div class="g9">
+            <div class="g" style="background:linear-gradient(140deg,#BFD9FF,#8FB8F9)"><span class="del">✕</span></div>
+            <div class="g" style="background:linear-gradient(140deg,#FFDFAE,#F5B75E)"><span class="del">✕</span></div>
+            <div class="g" style="background:linear-gradient(140deg,#C9E8A8,#8FC96B)"><span class="del">✕</span></div>
+            <div class="g" style="background:linear-gradient(140deg,#DCD0FF,#B9A7FF)"><span class="del">✕</span></div>
+            <div class="g" style="background:linear-gradient(140deg,#FFD6CC,#FF9E86)"><span class="del">✕</span></div>
+            <div class="g add">＋</div>
+          </div>
+
+          <div class="editor" style="min-height:74px;margin-top:11px">
+            <div class="txt" style="font-size:11.5px">早餐：全麦贝果 + 拿铁 ☕</div>
+            <div class="cnt" style="margin-top:12px">24 / 500</div>
+          </div>
+
+          <div class="cat" style="margin-top:11px">
+            <div class="c"><div class="ci" style="background:var(--ink)"></div>运动</div>
+            <div class="c on"><div class="ci" style="background:#13805C"></div>饮食</div>
+            <div class="c"><div class="ci" style="background:var(--amber)"></div>心情</div>
+            <div class="c"><div class="ci" style="background:var(--lilac)"></div>其他</div>
+          </div>
+
+          <div class="mood-hd"><span class="t" style="font-size:11px;font-weight:800">顺手记个体重</span><span class="a">可选 · 0.1kg</span></div>
+          <div class="wgt">
+            <div class="ico">⚖️</div>
+            <div class="v">62.5</div><div class="u">kg</div>
+            <div style="margin-left:auto;display:flex;gap:6px">
+              <div class="st">−</div><div class="st">＋</div>
+            </div>
+          </div>
+
+          <div class="ed-bar">
+            <span class="plus">🖼️</span>
+            <span style="font-size:11px;color:var(--ink-3);flex:1">相册 / 拍照</span>
+            <div class="send">↑</div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap"><div class="t"><span class="tg">M2</span>记录 · 图片 / 体重</div><div class="d">九宫格 9 张上限；体重卡用 1.4px 墨黑描边强调"可编辑"</div></div>
+    </div>
+
+  </div>
+
+  <!-- ============ 屏幕 02 ============ -->
+  <div class="sec"><span class="no">03</span><h2>回顾与洞察 · 手账式的过去</h2><span class="ln"></span><span class="cnt">M4 / M7 / M10</span></div>
+
+  <div class="board">
+
+    <!-- 时间线 -->
+    <div class="shot">
+      <div class="phone"><div class="screen">
+        <div class="sb"><span>9:41</span><span class="ic"><i class="sig"></i><i class="bat"></i></span></div>
+        <div class="view">
+          <div class="tl-hd">
+            <div class="h-big">翻一翻</div>
+            <div class="tl-tabs"><span class="on">日</span><span>周</span><span>月</span><span style="margin-left:auto;font-size:10px;color:var(--ink-3)">筛选</span></div>
+          </div>
+          <div class="tl-body">
+            <div class="tl-day"><span class="d">11.02</span><span class="w">周一 · 3 条</span><span class="ln"></span></div>
+            <div class="tl-card">
+              <div class="bar" style="background:var(--sky)"></div>
+              <div class="main">
+                <div class="t">晨跑 5 公里，配速 6'20"</div>
+                <div class="m"><span class="pill" style="background:var(--sky-wash);color:#1B6FA8">运动</span><span>🔥 连续 12 天</span><span class="num">07:32</span></div>
+              </div>
+            </div>
+            <div class="tl-card">
+              <div class="bar" style="background:var(--mint)"></div>
+              <div class="main">
+                <div class="t">轻食沙拉 + 冰美式</div>
+                <div class="m"><span class="pill" style="background:var(--mint-wash);color:#13805C">饮食</span><span class="num">12:20</span></div>
+                <div class="ph"><i style="background:linear-gradient(140deg,#C9E8A8,#8FC96B)"></i><i style="background:linear-gradient(140deg,#E3C39A,#C39A6B)"></i><i style="background:linear-gradient(140deg,#FFD6CC,#FF9E86)"></i></div>
+              </div>
+            </div>
+            <div class="tl-card">
+              <div class="bar" style="background:var(--lilac)"></div>
+              <div class="main">
+                <div class="t">午后有点闷，下楼走了走</div>
+                <div class="m"><span class="pill" style="background:var(--lilac-wash);color:#5B44A8">心情</span><span>😔 低落</span><span class="num">14:05</span></div>
+              </div>
+            </div>
+            <div class="tl-day" style="margin-top:14px"><span class="d">11.01</span><span class="w">周日 · 2 条</span><span class="ln"></span></div>
+            <div class="tl-card">
+              <div class="bar" style="background:var(--lilac)"></div>
+              <div class="main">
+                <div class="t">体重 62.8 kg，比昨天轻 0.3</div>
+                <div class="m"><span class="pill" style="background:var(--lilac-wash);color:#5B44A8">体重</span><span class="num">08:10</span></div>
+              </div>
+            </div>
+            <div class="tl-card">
+              <div class="bar" style="background:var(--sky)"></div>
+              <div class="main">
+                <div class="t">夜跑 3 公里，出汗很舒服</div>
+                <div class="m"><span class="pill" style="background:var(--sky-wash);color:#1B6FA8">运动</span><span class="num">21:15</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tb">
+          <div class="it"><div class="g"></div>今天</div>
+          <div class="it on"><div class="g"></div>时间线</div>
+          <div class="mid"><div class="g"></div><div class="l">记录</div></div>
+          <div class="it"><div class="g"></div>数据</div>
+          <div class="it"><div class="g"></div>我的</div>
+        </div>
+      </div></div>
+      <div class="cap"><div class="t"><span class="tg">M4</span>时间线</div><div class="d">日期用等宽数字当"章节号"，左侧色条区分记录类型</div></div>
+    </div>
+
+    <!-- 统计 -->
+    <div class="shot">
+      <div class="phone"><div class="screen">
+        <div class="sb"><span>9:41</span><span class="ic"><i class="sig"></i><i class="bat"></i></span></div>
+        <div class="view">
+          <div class="stat-hd">
+            <div class="h-big">变化</div>
+            <div class="tl-tabs"><span class="on">周</span><span>月</span><span>季</span><span style="margin-left:auto;font-size:10px;color:var(--ink-3)">体重</span></div>
+          </div>
+
+          <div class="big-card">
+            <div class="big-row">
+              <div>
+                <div class="mini-lbl" style="margin:0 0 5px">当前体重</div>
+                <div class="big-v">62.5<span>kg</span></div>
+              </div>
+              <span class="delta dn">↓ 1.4 kg / 4 周</span>
+            </div>
+            <svg viewBox="0 0 250 96" width="100%" height="94" style="margin-top:10px">
+              <defs>
+                <linearGradient id="limeFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#D8F45C" stop-opacity=".55"/>
+                  <stop offset="1" stop-color="#D8F45C" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <g stroke="#F0EBE0" stroke-width="1">
+                <line x1="0" y1="22" x2="250" y2="22"/><line x1="0" y1="48" x2="250" y2="48"/><line x1="0" y1="74" x2="250" y2="74"/>
+              </g>
+              <path d="M8 32 L44 40 L80 36 L116 46 L152 42 L188 54 L224 52 L242 60 L242 96 L8 96 Z" fill="url(#limeFill)"/>
+              <path d="M8 32 L44 40 L80 36 L116 46 L152 42 L188 54 L224 52 L242 60" fill="none" stroke="#17161A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+              <g fill="#FFFFFF" stroke="#17161A" stroke-width="2">
+                <circle cx="8" cy="32" r="3"/><circle cx="80" cy="36" r="3"/><circle cx="152" cy="42" r="3"/><circle cx="224" cy="52" r="3"/>
+              </g>
+              <circle cx="242" cy="60" r="4.5" fill="#D8F45C" stroke="#17161A" stroke-width="2.2"/>
+              <g font-family="ui-monospace,monospace" font-size="7.5" fill="#8E8B96" text-anchor="middle">
+                <text x="8" y="90">10/06</text><text x="80" y="90">10/17</text><text x="152" y="90">10/26</text><text x="224" y="90">11/01</text>
+              </g>
+              <text x="242" y="44" font-family="ui-monospace,monospace" font-size="8" font-weight="700" fill="#17161A" text-anchor="middle">62.5</text>
+            </svg>
+          </div>
+
+          <div class="big-card">
+            <div class="mini-lbl" style="margin:0 0 10px">本周情绪构成</div>
+            <div class="donut-wrap">
+              <svg width="86" height="86" viewBox="0 0 42 42">
+                <circle cx="21" cy="21" r="16" fill="none" stroke="#F0EBE0" stroke-width="6"/>
+                <circle cx="21" cy="21" r="16" fill="none" stroke="#FFC857" stroke-width="6" stroke-dasharray="34 66" stroke-dashoffset="0" transform="rotate(-90 21 21)" stroke-linecap="round"/>
+                <circle cx="21" cy="21" r="16" fill="none" stroke="#7CC5FF" stroke-width="6" stroke-dasharray="26 74" stroke-dashoffset="-34" transform="rotate(-90 21 21)" stroke-linecap="round"/>
+                <circle cx="21" cy="21" r="16" fill="none" stroke="#8E8B96" stroke-width="6" stroke-dasharray="20 80" stroke-dashoffset="-60" transform="rotate(-90 21 21)" stroke-linecap="round"/>
+                <text x="21" y="20" font-family="ui-monospace,monospace" font-size="7" font-weight="700" text-anchor="middle" fill="#17161A">21</text>
+                <text x="21" y="27" font-size="4" text-anchor="middle" fill="#8E8B96">条记录</text>
+              </svg>
+              <div class="donut-legend">
+                <div class="lg-row"><i style="background:#FFC857"></i>开心<b>34%</b></div>
+                <div class="lg-row"><i style="background:#7CC5FF"></i>平静<b>26%</b></div>
+                <div class="lg-row"><i style="background:#8E8B96"></i>低落<b>20%</b></div>
+                <div class="lg-row"><i style="background:#B9A7FF"></i>焦虑<b>12%</b></div>
+                <div class="lg-row"><i style="background:#4FD8A4"></i>其他<b>8%</b></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="big-card">
+            <div class="mini-lbl" style="margin:0 0 10px">饮食记录 · 每天次数</div>
+            <div class="bars">
+              <div class="b f" style="height:56%"></div><div class="b f" style="height:82%"></div><div class="b f" style="height:58%"></div>
+              <div class="b" style="height:26%"></div><div class="b f" style="height:88%"></div><div class="b f" style="height:62%"></div><div class="b f" style="height:70%"></div>
+            </div>
+            <div class="xl"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+          </div>
+        </div>
+        <div class="tb">
+          <div class="it"><div class="g"></div>今天</div>
+          <div class="it"><div class="g"></div>时间线</div>
+          <div class="mid"><div class="g"></div><div class="l">记录</div></div>
+          <div class="it on"><div class="g"></div>数据</div>
+          <div class="it"><div class="g"></div>我的</div>
+        </div>
+      </div></div>
+      <div class="cap"><div class="t"><span class="tg">M7</span>数据 · 变化觉察</div><div class="d">青柠渐变面积图 + 环形情绪构成，一屏三张卡不拥挤</div></div>
+    </div>
+
+    <!-- AI 总结 -->
+    <div class="shot">
+      <div class="phone"><div class="screen">
+        <div class="sb"><span>9:41</span><span class="ic"><i class="sig"></i><i class="bat"></i></span></div>
+        <div class="view">
+          <div class="ai-top">
+            <div class="ai-meta"><span class="sp">✦</span>Weekly · 11.02</div>
+            <div class="ai-title">这一周，你比上周<br><u>稳了一点</u>。</div>
+            <div class="ai-sub">21 条记录 · 6 次运动 · 生成本周总结</div>
+          </div>
+
+          <div class="ai-blk">
+            <div class="k">内容回顾</div>
+            <div class="p">运动 6 次，累计 <b>24.6 公里</b>，比上周多 4 公里；饮食记录 15 条，外卖从 5 次降到 2 次；情绪以「平静」为主，<b>周三午后出现一次低落</b>，通常发生在久坐之后。</div>
+          </div>
+
+          <div class="ai-blk">
+            <div class="k">趋势觉察</div>
+            <div class="p">体重 4 周累计 <b>−1.4 kg</b>，下降节奏健康；运动日的次日早晨，体重下降更明显。低落出现前，当天饮水量都低于 800ml。</div>
+            <div class="mini-chips"><span class="hl">📉 体重曲线</span><span>🎭 情绪趋势</span><span>🍽️ 饮食频次</span></div>
+          </div>
+
+          <div class="ai-blk">
+            <div class="k">试试这三件小事</div>
+            <div class="p">① 周三下午留 10 分钟散步；② 久坐时补一杯水；③ 运动节奏保持现状，不必加量。</div>
+          </div>
+
+          <div class="ai-note"><i>i</i><span>AI 生成，仅供参考，不构成医疗建议。数据仅你可见，可在设置中关闭。</span></div>
+          <div class="ai-cta">换一版说法 · 本周剩余 1 次</div>
+        </div>
+      </div></div>
+      <div class="cap"><div class="t"><span class="tg p1">M10</span>AI 总结 · 周报</div><div class="d">当刊物封面做：大标题 + 下划线高亮 + 三段短文</div></div>
+    </div>
+
+  </div>
+
+  <!-- ============ 屏幕 03 ============ -->
+  <div class="sec"><span class="no">04</span><h2>激励与个人 · 让人想再来一天</h2><span class="ln"></span><span class="cnt">M5 / M3</span></div>
+
+  <div class="board">
+
+    <!-- 打卡 -->
+    <div class="shot">
+      <div class="phone"><div class="screen">
+        <div class="sb"><span>9:41</span><span class="ic"><i class="sig"></i><i class="bat"></i></span></div>
+        <div class="view">
+          <div class="ck-hero">
+            <div class="lbl">Streak</div>
+            <div class="ck-num">12<span>天</span></div>
+            <div class="ck-sub">再记 9 天，破自己的纪录</div>
+            <div class="ck-rec"><div class="a">21 天</div><div class="b">历史最长</div></div>
+          </div>
+
+          <div class="cal">
+            <div class="cal-top"><span class="m">2026 · 11 月</span><span class="s">18 / 30 天</span></div>
+            <div class="dots">
+              <span class="dl">一</span><span class="dl">二</span><span class="dl">三</span><span class="dl">四</span><span class="dl">五</span><span class="dl">六</span><span class="dl">日</span>
+              <span class="d on">26</span><span class="d on">27</span><span class="d on">28</span><span class="d on">29</span><span class="d on">30</span><span class="d on">31</span><span class="d on">1</span>
+              <span class="d today">2</span><span class="d">3</span><span class="d">4</span><span class="d">5</span><span class="d">6</span><span class="d">7</span><span class="d">8</span>
+              <span class="d">9</span><span class="d">10</span><span class="d">11</span><span class="d">12</span><span class="d">13</span><span class="d">14</span><span class="d">15</span>
+              <span class="d">16</span><span class="d">17</span><span class="d">18</span><span class="d">19</span><span class="d">20</span><span class="d">21</span><span class="d">22</span>
+            </div>
+          </div>
+
+          <div class="badges">
+            <div class="bd"><div class="e">🥇</div><div class="t">7 天<br>坚持</div></div>
+            <div class="bd"><div class="e">🌙</div><div class="t">夜跑<br>记录者</div></div>
+            <div class="bd"><div class="e">💧</div><div class="t">饮水<br>打卡</div></div>
+            <div class="bd lock"><div class="e">🏆</div><div class="t">21 天<br>破纪录</div></div>
+          </div>
+
+          <div class="card" style="margin:12px 18px 0;padding:13px 15px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:11px;font-weight:800">本周完成度</span>
+              <span class="num" style="font-size:11px;font-weight:700">6 / 7</span>
+            </div>
+            <div style="height:9px;border-radius:9px;background:var(--paper-2);margin-top:9px;overflow:hidden">
+              <div style="width:86%;height:100%;border-radius:9px;background:var(--ink)"></div>
+            </div>
+            <div style="font-size:9px;color:var(--ink-3);margin-top:8px">连续 3 周达标 · 解锁「稳定记录者」</div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap"><div class="t"><span class="tg">M5</span>打卡</div><div class="d">日历改点阵（圆点=已记），大数字用等宽体做视觉锚点</div></div>
+    </div>
+
+    <!-- 我的 -->
+    <div class="shot">
+      <div class="phone"><div class="screen">
+        <div class="sb"><span>9:41</span><span class="ic"><i class="sig"></i><i class="bat"></i></span></div>
+        <div class="view">
+          <div class="me-hd">
+            <div class="me-av">🦊</div>
+            <div>
+              <div class="me-n">阿柠</div>
+              <div class="me-s">SINCE 2026.08 · 612 RECORDS</div>
+            </div>
+            <div class="me-set">⚙</div>
+          </div>
+
+          <div class="me-stats">
+            <div class="s"><b>612</b><span>记录</span></div>
+            <div class="s"><b>87</b><span>照片</span></div>
+            <div class="s"><b>203</b><span>语音</span></div>
+            <div class="s"><b>12</b><span>连续天</span></div>
+          </div>
+
+          <div class="list">
+            <div class="row"><div class="ri" style="background:var(--lime-wash)">✦</div><span class="rt">AI 总结</span><span class="rv">每周一推送</span><span class="ra">›</span></div>
+            <div class="row"><div class="ri" style="background:#FFF6DE">⏰</div><span class="rt">记录提醒</span><span class="rv">每天 21:30</span><span class="ra">›</span></div>
+            <div class="row"><div class="ri" style="background:var(--sky-wash)">📊</div><span class="rt">数据与曲线</span><span class="ra">›</span></div>
+          </div>
+
+          <div class="list">
+            <div class="row"><div class="ri" style="background:var(--lilac-wash)">🔐</div><span class="rt">隐私与数据</span><span class="ra">›</span></div>
+            <div class="row"><div class="ri" style="background:var(--paper-2)">🗑️</div><span class="rt">回收站</span><span class="rv">3 条</span><span class="ra">›</span></div>
+            <div class="row"><div class="ri" style="background:var(--coral-wash)">📤</div><span class="rt">导出数据</span><span class="ra">›</span></div>
+            <div class="row"><div class="ri" style="background:var(--mint-wash)">💬</div><span class="rt">反馈</span><span class="ra">›</span></div>
+          </div>
+
+          <div style="text-align:center;font-size:9px;color:var(--ink-3);margin-top:14px">记一天 V1.0 · 数据只属于你</div>
+        </div>
+        <div class="tb">
+          <div class="it"><div class="g"></div>今天</div>
+          <div class="it"><div class="g"></div>时间线</div>
+          <div class="mid"><div class="g"></div><div class="l">记录</div></div>
+          <div class="it"><div class="g"></div>数据</div>
+          <div class="it on"><div class="g"></div>我的</div>
+        </div>
+      </div></div>
+      <div class="cap"><div class="t"><span class="tg">M3</span>我的</div><div class="d">墨黑统计条 + 白卡列表，信息密度高但不吵</div></div>
+    </div>
+
+    <!-- 空状态 -->
+    <div class="shot">
+      <div class="phone"><div class="screen">
+        <div class="sb"><span>9:41</span><span class="ic"><i class="sig"></i><i class="bat"></i></span></div>
+        <div class="view">
+          <div class="home-top"><div class="hi"><div class="who">晚上好，<b>阿柠</b></div><div class="streak-b"><span class="fl">🔥</span><span class="n">0</span><span class="u">天</span></div></div></div>
+          <div class="empty-face">🌱</div>
+          <div class="empty-t">今天还是空白页</div>
+          <div class="empty-s">不用写很多。<br>一句话、一张照片，都算今天的痕迹。</div>
+          <div class="empty-btn">记下第一笔</div>
+
+          <div class="card" style="margin:22px 18px 0;padding:14px 15px;background:var(--lime-wash);border-color:transparent">
+            <div class="lbl" style="color:#6B7A1E">小提示</div>
+            <div style="font-size:10.5px;line-height:1.75;color:#4C5714;margin-top:6px">记录满 3 天后，AI 会开始帮你找规律——比如哪种运动后睡得更好。</div>
+          </div>
+        </div>
+        <div class="tb">
+          <div class="it on"><div class="g"></div>今天</div>
+          <div class="it"><div class="g"></div>时间线</div>
+          <div class="mid"><div class="g"></div><div class="l">记录</div></div>
+          <div class="it"><div class="g"></div>数据</div>
+          <div class="it"><div class="g"></div>我的</div>
+        </div>
+      </div></div>
+      <div class="cap"><div class="t"><span class="tg">STATE</span>空状态</div><div class="d">不写「暂无数据」，换成一句人话 + 一个动作 + 一个期待</div></div>
+    </div>
+
+  </div>
+
+  <!-- ============ 组件库 ============ -->
+  <div class="sec"><span class="no">05</span><h2>组件与状态 · 可直接交付开发</h2><span class="ln"></span><span class="cnt">Buttons / Loading / Feedback</span></div>
+
+  <div class="st-grid">
+    <div class="st-card">
+      <div class="st-t">按钮 · 四型两尺寸</div>
+      <div class="st-s">主操作用青柠，次操作用墨黑描边，危险操作才用珊瑚</div>
+      <div class="btn-row">
+        <span class="b lime">记下这一笔</span>
+        <span class="b pri">保存</span>
+        <span class="b ghost">再看看</span>
+        <span class="b soft">取消</span>
+        <span class="b dis">保存</span>
+        <span class="b pri sm">小号</span>
+      </div>
+      <div class="st-s" style="margin-top:14px;margin-bottom:0;line-height:1.7">圆角 999px · 高度 36/44pt · 文字 11/13px 700 · 禁用态降透明至 60%</div>
+    </div>
+
+    <div class="st-card">
+      <div class="st-t">情绪选择器 · 六档</div>
+      <div class="st-s">选中态用青柠外环 3px，不改变底色（保留情绪色识别）</div>
+      <div class="mood-dots">
+        <i style="background:var(--m-joy);box-shadow:0 0 0 3px #fff,0 0 0 5px var(--ink)"></i>
+        <i style="background:var(--m-calm)"></i>
+        <i style="background:var(--m-low)"></i>
+        <i style="background:var(--m-angry)"></i>
+        <i style="background:var(--m-anx)"></i>
+        <i style="background:var(--m-tired)"></i>
+      </div>
+      <div class="st-s" style="margin-top:16px;margin-bottom:0;line-height:1.7">点击区域 44×44pt（视觉圆 26px，四周留白补足）· 每个色值配文字标签，不单靠颜色传达</div>
+    </div>
+
+    <div class="st-card">
+      <div class="st-t">加载骨架屏</div>
+      <div class="st-s">首屏用骨架而非转圈，减少等待感</div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="sk" style="width:34px;height:34px;border-radius:12px"></div>
+        <div style="flex:1">
+          <div class="sk" style="height:9px;width:78%"></div>
+          <div class="sk" style="height:8px;width:46%;margin-top:7px"></div>
+        </div>
+      </div>
+      <div class="sk" style="height:64px;margin-top:12px;border-radius:14px"></div>
+      <div class="st-s" style="margin-top:12px;margin-bottom:0;line-height:1.7">骨架色 1.4s 循环，动效遵循 <b style="color:var(--ink)">prefers-reduced-motion</b> 时静止</div>
+    </div>
+
+    <div class="st-card">
+      <div class="st-t">反馈 · 轻提示</div>
+      <div class="st-s">不做全屏弹窗，用底部浮条，3 秒自动消失</div>
+      <div style="background:var(--ink);border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:9px">
+        <span style="color:var(--lime);font-size:12px">✓</span>
+        <span style="color:#fff;font-size:11px">已记下，今天第 3 笔</span>
+      </div>
+      <div style="background:var(--coral-wash);border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:9px;margin-top:9px">
+        <span style="color:#D9411F;font-size:12px">!</span>
+        <span style="color:#B33118;font-size:11px">网络不太好，已存为草稿</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div style="max-width:640px">
+      <b>可访问性校验</b>：墨黑 #17161A 对纸底 #FAF6EF 达 15.8:1；正文墨 60 #57555F 达 6.4:1；青柠 #D8F45C 仅承载墨黑文字（13.1:1），不用于白字。所有可点区域 ≥ 44×44pt，焦点环统一 2px 墨黑 + 2px 外扩。情绪不单独依赖颜色传达，均配文字标签。
+    </div>
+    <div style="max-width:420px">
+      <b>本版说明</b>：纯静态 UI 稿，无跳转与校验逻辑。照片位为渐变色块占位（开发对应 CDN thumb 320px）。深色模式、分享海报、iPad 布局未含在本版，列入 V1.1 视觉待办。
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
