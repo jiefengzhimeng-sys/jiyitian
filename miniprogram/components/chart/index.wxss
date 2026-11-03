@@ -1,0 +1,4 @@
+.cv {
+  display: block;
+  width: 100%;
+}

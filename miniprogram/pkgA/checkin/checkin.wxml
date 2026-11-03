@@ -1,0 +1,94 @@
+<view class="page">
+
+  <nav-bar title="打卡" back="{{true}}" />
+
+  <view wx:if="{{loading}}" class="sk-box">
+    <skeleton rows="3" variant="card" />
+  </view>
+
+  <block wx:else>
+
+    <!-- 连续天数大卡 -->
+    <view class="hero">
+      <view class="hero-l">
+        <text class="lbl hero-lbl">Streak</text>
+        <view class="hero-num-row">
+          <text class="hero-num num">{{streak}}</text>
+          <text class="hero-unit">天</text>
+        </view>
+        <text class="hero-sub">已经连续记录了 {{streak}} 天{{streak >= 7 ? '，这已经是习惯的形状了' : '，再坚持几天就成习惯了'}}</text>
+      </view>
+      <view class="hero-flame">🔥</view>
+    </view>
+
+    <!-- 点阵月历 -->
+    <view class="cal">
+      <view class="cal-hd">
+        <text class="cal-t num">{{monthLabel}}</text>
+        <text class="cal-c num">本月 {{monthCount}} 天</text>
+      </view>
+
+      <view class="cal-week">
+        <text wx:for="{{weekdays}}" wx:key="index" class="cw">{{item}}</text>
+      </view>
+
+      <view class="cal-grid">
+        <view
+          wx:for="{{cells}}"
+          wx:key="key"
+          class="cc {{item.blank ? 'blank' : ''}} {{item.checked ? 'on' : ''}} {{item.today ? 'today' : ''}} {{item.future ? 'future' : ''}}"
+        >
+          <text wx:if="{{!item.blank}}" class="cc-t">{{item.day}}</text>
+        </view>
+      </view>
+
+      <view class="cal-legend">
+        <view class="lg"><view class="lg-d on"></view><text class="lg-t">已记录</text></view>
+        <view class="lg"><view class="lg-d today"></view><text class="lg-t">今天</text></view>
+        <view class="lg"><view class="lg-d"></view><text class="lg-t">未记录</text></view>
+      </view>
+    </view>
+
+    <!-- 本周完成度 -->
+    <view class="week">
+      <view class="week-hd">
+        <text class="week-t">本周完成度</text>
+        <text class="week-n num">{{weekDone}}/7</text>
+      </view>
+      <view class="week-bar">
+        <view class="week-fill" style="width:{{progress}}%;"></view>
+      </view>
+      <text class="week-hint">{{progress >= 100 ? '这一周每天都在，很不容易' : progress >= 50 ? '过半了，剩几天补上就满周' : '慢慢来，先记满 3 天'}}</text>
+    </view>
+
+    <!-- 徽章 -->
+    <view class="badges">
+      <view class="bg-hd">
+        <text class="lbl">Badges</text>
+        <text class="bg-c num">{{unlockedCount}}/{{badges.length}}</text>
+      </view>
+      <view class="bg-grid">
+        <view wx:for="{{badges}}" wx:key="key" class="bg {{item.unlocked ? 'on' : ''}}">
+          <text class="bg-e">{{item.emoji}}</text>
+          <text class="bg-n">{{item.name}}</text>
+          <text wx:if="{{!item.unlocked}}" class="bg-lock">未解锁</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最长记录 -->
+    <view class="best">
+      <text class="best-l">历史最长连续</text>
+      <text class="best-n num">{{longest}} 天</text>
+    </view>
+
+    <!-- CTA -->
+    <view class="cta">
+      <view class="cta-btn tap" bindtap="goRecord">今天还没记？补一笔</view>
+      <view class="cta-ghost tap" bindtap="goHome">回首页</view>
+    </view>
+
+  </block>
+
+  <view class="bottom-space"></view>
+</view>

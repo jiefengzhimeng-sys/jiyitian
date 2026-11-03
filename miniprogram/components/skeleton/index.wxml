@@ -1,0 +1,12 @@
+<view class="sk-wrap">
+  <block wx:for="{{rows}}" wx:key="index">
+    <view wx:if="{{variant === 'list'}}" class="sk-row">
+      <view class="sk sk-dot"></view>
+      <view class="sk-body">
+        <view class="sk sk-line" style="width:78%"></view>
+        <view class="sk sk-line sub" style="width:46%"></view>
+      </view>
+    </view>
+    <view wx:else class="sk sk-card"></view>
+  </block>
+</view>

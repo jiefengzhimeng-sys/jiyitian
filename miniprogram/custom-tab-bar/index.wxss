@@ -1,0 +1,84 @@
+.tb {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 950;
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1rpx solid #e8e1d4;
+  display: flex;
+  padding-top: 14rpx;
+}
+
+.it {
+  flex: 1;
+  text-align: center;
+  padding-bottom: 10rpx;
+}
+
+.dot {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 14rpx;
+  background: #e9e0d1;
+  margin: 0 auto 8rpx;
+  transition: background 0.18s ease;
+}
+
+.it.on .dot {
+  background: #17161a;
+}
+
+.t {
+  font-size: 19rpx;
+  color: #8e8b96;
+  letter-spacing: 0.4rpx;
+}
+
+.it.on .t {
+  color: #17161a;
+  font-weight: 800;
+}
+
+/* 中间记录按钮 */
+.it.center {
+  position: relative;
+  top: -34rpx;
+}
+
+.plus {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 30rpx;
+  background: #d8f45c;
+  margin: 0 auto 6rpx;
+  position: relative;
+  box-shadow: 0 16rpx 32rpx -16rpx rgba(150, 180, 20, 0.9);
+  transition: transform 0.14s ease;
+}
+.plus:active {
+  transform: scale(0.94);
+}
+.plus-h,
+.plus-v {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #17161a;
+  border-radius: 4rpx;
+}
+.plus-h {
+  width: 30rpx;
+  height: 5rpx;
+  transform: translate(-50%, -50%);
+}
+.plus-v {
+  width: 5rpx;
+  height: 30rpx;
+  transform: translate(-50%, -50%);
+}
+
+.it.center .t {
+  color: #57555f;
+  font-weight: 700;
+}

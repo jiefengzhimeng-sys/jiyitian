@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "nav-bar": "/components/nav-bar/index",
+    "record-card": "/components/record-card/index",
+    "skeleton": "/components/skeleton/index",
+    "empty-state": "/components/empty-state/index"
+  },
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "onReachBottomDistance": 120
+}

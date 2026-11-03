@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "nav-bar": "/components/nav-bar/index",
+    "chart": "/components/chart/index",
+    "skeleton": "/components/skeleton/index",
+    "empty-state": "/components/empty-state/index"
+  },
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

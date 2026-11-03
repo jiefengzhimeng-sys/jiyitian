@@ -1,0 +1,41 @@
+<view class="rc {{mode}}" bindtap="onTap" hover-class="rc-hover" hover-stay-time="80">
+  <view wx:if="{{showBar}}" class="rc-bar" style="background:{{catColor}};"></view>
+
+  <view class="rc-dot" style="background:{{catWash}};">
+    <text>{{emoji}}</text>
+  </view>
+
+  <view class="rc-main">
+    <text class="rc-title">{{title}}</text>
+
+    <view class="rc-meta">
+      <text class="pill" style="background:{{catWash}};color:{{catColor}};">{{catName}}</text>
+
+      <text wx:if="{{moodEmoji}}" class="rc-mood">{{moodEmoji}}{{moodName}}</text>
+
+      <!-- 语音：静态波形 + 秒数 -->
+      <view wx:if="{{isVoice}}" class="wave">
+        <view
+          wx:for="{{waveHeights}}"
+          wx:key="index"
+          class="wave-i"
+          style="height:{{item}}px;"
+        ></view>
+        <text class="rc-dur num">{{duration}}″</text>
+      </view>
+    </view>
+
+    <view wx:if="{{thumbs.length}}" class="rc-thumbs">
+      <view
+        wx:for="{{thumbs}}"
+        wx:key="index"
+        class="thumb {{item.isColor ? 'color' : ''}}"
+        style="{{item.isColor ? 'background:linear-gradient(140deg, ' + item.value + ', rgba(0,0,0,.18));' : ''}}"
+      >
+        <image wx:if="{{!item.isColor}}" src="{{item.value}}" mode="aspectFill" class="thumb-img" lazy-load />
+      </view>
+    </view>
+  </view>
+
+  <text class="rc-time num">{{timeText}}</text>
+</view>

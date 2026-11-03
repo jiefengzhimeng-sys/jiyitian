@@ -1,0 +1,167 @@
+.page {
+  min-height: 100vh;
+  background: var(--paper);
+  padding-bottom: 40rpx;
+}
+
+.hd {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 4rpx 36rpx 0;
+}
+.hd-sub {
+  font-size: 19rpx;
+  color: var(--ink-3);
+}
+
+/* 范围切换 */
+.modes {
+  display: flex;
+  gap: 8rpx;
+  margin: 22rpx 36rpx 0;
+  padding: 8rpx;
+  background: var(--paper-2);
+  border-radius: var(--r-full);
+}
+.mode {
+  flex: 1;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-full);
+}
+.mode.on {
+  background: var(--ink);
+}
+.mode-t {
+  font-size: 23rpx;
+  font-weight: 800;
+  color: var(--ink-3);
+  letter-spacing: -0.4rpx;
+}
+.mode.on .mode-t {
+  color: #fff;
+}
+
+/* 分类筛选 */
+.filters {
+  white-space: nowrap;
+  display: flex;
+  padding: 20rpx 36rpx 4rpx;
+}
+.fl {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  height: 56rpx;
+  padding: 0 24rpx;
+  margin-right: 12rpx;
+  border-radius: var(--r-full);
+  background: transparent;
+  border: 1rpx solid var(--line);
+}
+.fl.on {
+  background: var(--lime);
+  border-color: var(--lime);
+}
+.fl-t {
+  font-size: 21rpx;
+  font-weight: 700;
+  color: var(--ink-3);
+}
+.fl.on .fl-t {
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.skeleton-box {
+  padding: 28rpx 36rpx 0;
+}
+
+/* 分组 */
+.group {
+  margin: 32rpx 36rpx 0;
+}
+.g-hd {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+.g-hd-l {
+  display: flex;
+  align-items: baseline;
+  gap: 10rpx;
+}
+.g-day {
+  font-size: 30rpx;
+  font-weight: 800;
+  letter-spacing: -0.8rpx;
+  color: var(--ink);
+}
+.g-week {
+  font-size: 19rpx;
+  color: var(--ink-3);
+}
+.g-count {
+  font-size: 18rpx;
+  color: var(--ink-3);
+}
+
+.g-line {
+  height: 1rpx;
+  background: var(--line);
+  margin-bottom: 18rpx;
+}
+
+.g-body {
+  position: relative;
+  padding-left: 26rpx;
+}
+/* 左侧时间轴细线 */
+.g-body::before {
+  content: '';
+  position: absolute;
+  left: 5rpx;
+  top: 12rpx;
+  bottom: 12rpx;
+  width: 2rpx;
+  background: var(--line);
+}
+
+.g-item {
+  position: relative;
+  margin-bottom: 16rpx;
+}
+.g-item:last-child {
+  margin-bottom: 0;
+}
+.g-dot {
+  position: absolute;
+  left: -26rpx;
+  top: 30rpx;
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  border: 3rpx solid var(--paper);
+  z-index: 2;
+}
+
+.g-card {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  border: 1rpx solid var(--line-2);
+  overflow: hidden;
+}
+
+/* 加载更多 */
+.load-more {
+  padding: 36rpx 0 8rpx;
+  text-align: center;
+}
+.lm-t {
+  font-size: 19rpx;
+  color: var(--ink-3);
+}

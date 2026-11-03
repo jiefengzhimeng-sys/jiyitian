@@ -1,0 +1,15 @@
+<view class="nb {{theme}}" style="padding-top:{{statusBarHeight}}px;">
+  <view class="nb-inner">
+    <view class="nb-side">
+      <view wx:if="{{back}}" class="nb-back tap" bindtap="onBack" hover-class="none">
+        <view class="arrow"></view>
+      </view>
+    </view>
+    <view class="nb-title">{{title}}</view>
+    <view class="nb-side right">
+      <slot name="right"></slot>
+    </view>
+  </view>
+</view>
+<!-- 占位，避免内容被吸顶导航遮挡 -->
+<view style="height:{{statusBarHeight + 44}}px;"></view>

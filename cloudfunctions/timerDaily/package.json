@@ -1,0 +1,9 @@
+{
+  "name": "timerDaily",
+  "version": "1.0.0",
+  "description": "记一天 · 每日定时任务：streak 重算、周期总结预生成、回收站清理",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

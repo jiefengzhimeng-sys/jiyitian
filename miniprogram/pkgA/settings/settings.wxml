@@ -1,0 +1,110 @@
+<view class="page">
+
+  <nav-bar title="设置" back="{{true}}" />
+
+  <view class="group">
+    <text class="lbl group-lbl">Notify</text>
+
+    <view class="row">
+      <view class="row-l">
+        <text class="row-t">记录提醒</text>
+        <text class="row-d">到点提醒你补一笔，不催第二次</text>
+      </view>
+      <switch checked="{{reminder}}" color="#D8F45C" data-field="reminder" bindchange="onToggle" />
+    </view>
+
+    <view wx:if="{{reminder}}" class="row sub">
+      <text class="row-t small">提醒时间</text>
+      <picker mode="time" value="{{reminderTime}}" bindchange="onPickTime">
+        <view class="picker-val num">{{reminderTime}}</view>
+      </picker>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="row">
+      <view class="row-l">
+        <text class="row-t">AI 总结</text>
+        <text class="row-d">周期结束后自动生成日/周/月总结</text>
+      </view>
+      <switch checked="{{aiSummary}}" color="#D8F45C" data-field="aiSummary" bindchange="onToggle" />
+    </view>
+  </view>
+
+  <!-- 隐私与协议（高亮态用于从「我的 → 隐私」直接跳入） -->
+  <view class="group {{highlightPrivacy ? 'hl' : ''}}">
+    <text class="lbl group-lbl">Privacy</text>
+
+    <view class="row tap" bindtap="openPrivacySetting">
+      <view class="row-l">
+        <text class="row-t">微信隐私授权管理</text>
+        <text class="row-d">查看与撤销已授予的权限</text>
+      </view>
+      <text class="ar">›</text>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="row tap" bindtap="showPrivacyPolicy">
+      <view class="row-l">
+        <text class="row-t">隐私保护指引</text>
+        <text class="row-d">我们收集什么、用在哪里</text>
+      </view>
+      <text class="ar">›</text>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="row tap" bindtap="showAgreement">
+      <view class="row-l">
+        <text class="row-t">用户协议</text>
+      </view>
+      <text class="ar">›</text>
+    </view>
+  </view>
+
+  <!-- 数据 -->
+  <view class="group">
+    <text class="lbl group-lbl">Storage</text>
+
+    <view class="row tap" bindtap="onClearCache">
+      <view class="row-l">
+        <text class="row-t">清理缓存</text>
+        <text class="row-d">不会删除你的记录</text>
+      </view>
+      <text class="cache num">{{cacheText}}</text>
+    </view>
+
+    <block wx:if="{{useMock}}">
+      <view class="divider"></view>
+      <view class="row tap" bindtap="onResetMock">
+        <view class="row-l">
+          <text class="row-t">重置演示数据</text>
+          <text class="row-d">仅 Mock 模式可用</text>
+        </view>
+        <text class="ar">›</text>
+      </view>
+    </block>
+  </view>
+
+  <!-- 环境自检（开发期用，提审前可隐藏） -->
+  <view class="group">
+    <text class="lbl group-lbl">Diagnostics</text>
+    <view class="row">
+      <text class="row-t small">数据源</text>
+      <text class="diag">{{envText}}</text>
+    </view>
+    <view class="divider"></view>
+    <view class="row">
+      <text class="row-t small">基础库</text>
+      <text class="diag num">{{baseVersion}}</text>
+    </view>
+    <view class="divider"></view>
+    <view class="row tap" bindtap="showAbout">
+      <text class="row-t small">关于记一天</text>
+      <text class="diag num">v{{version}}</text>
+    </view>
+  </view>
+
+  <view class="bottom-space"></view>
+</view>

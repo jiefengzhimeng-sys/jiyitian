@@ -1,0 +1,17 @@
+<view class="tb" style="padding-bottom:{{safeBottom}}px;">
+  <view
+    wx:for="{{tabs}}"
+    wx:key="path"
+    class="it {{item.center ? 'center' : ''}} {{selected === index ? 'on' : ''}}"
+    data-index="{{index}}"
+    bindtap="onTap"
+  >
+    <!-- 中间项：青柠方块悬浮，用纯 CSS 绘制加号，不依赖图片资源 -->
+    <view wx:if="{{item.center}}" class="plus">
+      <view class="plus-h"></view>
+      <view class="plus-v"></view>
+    </view>
+    <view wx:else class="dot"></view>
+    <text class="t">{{item.text}}</text>
+  </view>
+</view>

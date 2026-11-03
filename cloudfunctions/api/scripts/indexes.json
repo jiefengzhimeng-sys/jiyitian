@@ -1,0 +1,165 @@
+{
+  "_comment": "索引清单：微信云开发不支持用 SDK 建索引，必须在「云开发控制台 → 数据库 → 集合 → 索引管理」逐条手工添加。只建支撑真实查询的索引，每个索引都会拖慢写入。",
+  "_principle": "所有高频查询都必须能命中 (userId, recordDate) 前缀；未命中索引的查询在数据量上来后会从 10ms 变成全表扫描数秒。",
+  "collections": {
+    "records": [
+      {
+        "name": "idx_user_date",
+        "fields": [
+          { "field": "userId", "order": "asc" },
+          { "field": "recordDate", "order": "desc" },
+          { "field": "createdAt", "order": "desc" }
+        ],
+        "unique": false,
+        "supports": "时间线列表、某日记录流、复合游标分页",
+        "must": true
+      },
+      {
+        "name": "idx_user_status_date",
+        "fields": [
+          { "field": "userId", "order": "asc" },
+          { "field": "status", "order": "asc" },
+          { "field": "recordDate", "order": "desc" }
+        ],
+        "unique": false,
+        "supports": "过滤已删除/违规后的所有查询（默认查询都带 status）",
+        "must": true
+      },
+      {
+        "name": "idx_user_tag_date",
+        "fields": [
+          { "field": "userId", "order": "asc" },
+          { "field": "tag", "order": "asc" },
+          { "field": "recordDate", "order": "desc" }
+        ],
+        "unique": false,
+        "supports": "按运动/饮食/心情筛选",
+        "must": false
+      },
+      {
+        "name": "idx_idempotency",
+        "fields": [{ "field": "idempotencyKey", "order": "asc" }],
+        "unique": true,
+        "supports": "防重复提交（网络抖动时前端重试）",
+        "must": true
+      },
+      {
+        "name": "idx_status_deletedAt",
+        "fields": [
+          { "field": "status", "order": "asc" },
+          { "field": "deletedAt", "order": "asc" }
+        ],
+        "unique": false,
+        "supports": "回收站到期清理扫描",
+        "must": true
+      }
+    ],
+    "daily_aggs": [
+      {
+        "name": "idx_user_date",
+        "fields": [
+          { "field": "userId", "order": "asc" },
+          { "field": "date", "order": "desc" }
+        ],
+        "unique": false,
+        "supports": "统计区间查询、streak 重算、打卡月历",
+        "must": true
+      }
+    ],
+    "media_assets": [
+      {
+        "name": "idx_record",
+        "fields": [{ "field": "recordId", "order": "asc" }],
+        "unique": false,
+        "supports": "详情页取媒体、删除记录时批量标记",
+        "must": true
+      },
+      {
+        "name": "idx_user_created",
+        "fields": [
+          { "field": "userId", "order": "asc" },
+          { "field": "createdAt", "order": "desc" }
+        ],
+        "unique": false,
+        "supports": "配额统计、孤儿媒体清理",
+        "must": false
+      }
+    ],
+    "ai_summaries": [
+      {
+        "name": "idx_user_period",
+        "fields": [
+          { "field": "userId", "order": "asc" },
+          { "field": "periodType", "order": "asc" },
+          { "field": "periodKey", "order": "desc" }
+        ],
+        "unique": false,
+        "supports": "总结列表、历史比较",
+        "must": true
+      }
+    ],
+    "ai_quota": [
+      {
+        "name": "idx_date_cost",
+        "fields": [
+          { "field": "date", "order": "desc" },
+          { "field": "costCents", "order": "desc" }
+        ],
+        "unique": false,
+        "supports": "全局日预算熔断（按天汇总花费）",
+        "must": true
+      }
+    ],
+    "reminders": [
+      {
+        "name": "idx_due",
+        "fields": [
+          { "field": "remindOn", "order": "asc" },
+          { "field": "remindTime", "order": "asc" },
+          { "field": "lastSentDate", "order": "asc" }
+        ],
+        "unique": false,
+        "supports": "定时扫描待发送提醒",
+        "must": true
+      }
+    ],
+    "audit_logs": [
+      {
+        "name": "idx_at",
+        "fields": [{ "field": "at", "order": "asc" }],
+        "unique": false,
+        "supports": "超期日志清理",
+        "must": true
+      },
+      {
+        "name": "idx_user_action",
+        "fields": [
+          { "field": "userId", "order": "asc" },
+          { "field": "action", "order": "asc" },
+          { "field": "at", "order": "desc" }
+        ],
+        "unique": false,
+        "supports": "按用户排查风控与配额拒绝记录",
+        "must": false
+      }
+    ],
+    "users": [
+      {
+        "name": "idx_status",
+        "fields": [{ "field": "status", "order": "asc" }],
+        "unique": false,
+        "supports": "注销冷静期到期清理",
+        "must": false
+      }
+    ],
+    "user_stats": [
+      {
+        "name": "idx_updated",
+        "fields": [{ "field": "updatedAt", "order": "asc" }],
+        "unique": false,
+        "supports": "定时任务轮转扫描所有用户（避免只扫到活跃用户）",
+        "must": true
+      }
+    ]
+  }
+}

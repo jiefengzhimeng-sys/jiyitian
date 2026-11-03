@@ -1,0 +1,15 @@
+<view class="moods">
+  <view
+    wx:for="{{moods}}"
+    wx:key="key"
+    class="m {{value === item.key ? 'on' : ''}}"
+    data-key="{{item.key}}"
+    bindtap="onPick"
+    aria-role="radio"
+    aria-checked="{{value === item.key}}"
+    aria-label="{{item.name}}"
+  >
+    <view class="f" style="background:{{item.wash}};">{{item.emoji}}</view>
+    <text class="n">{{item.name}}</text>
+  </view>
+</view>

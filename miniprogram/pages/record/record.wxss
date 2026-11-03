@@ -1,0 +1,467 @@
+/* ========== 记录创建页 ========== */
+.page {
+  min-height: 100vh;
+  background: var(--paper);
+  padding-bottom: 40rpx;
+}
+
+/* ---------- 顶部 ---------- */
+.hd {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 8rpx 36rpx 20rpx;
+}
+.hd-l {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+.hd-date {
+  font-size: 34rpx;
+  font-weight: 800;
+  letter-spacing: -1rpx;
+  color: var(--ink);
+}
+.draft-chip {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 8rpx 16rpx;
+  border-radius: var(--r-full);
+  background: var(--lime-wash);
+  border: 1rpx solid rgba(185, 214, 47, 0.5);
+}
+.draft-dot {
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: var(--lime-deep);
+}
+.draft-t {
+  font-size: 19rpx;
+  font-weight: 700;
+  color: #6B7A16;
+}
+.draft-x {
+  font-size: 24rpx;
+  color: #6B7A16;
+  padding-left: 4rpx;
+  line-height: 1;
+}
+
+/* ---------- 分类 ---------- */
+.cats {
+  white-space: nowrap;
+  padding: 0 36rpx 4rpx;
+  display: flex;
+}
+.cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;
+  flex: 0 0 auto;
+  margin-right: 14rpx;
+  padding: 14rpx 26rpx;
+  border-radius: var(--r-full);
+  background: var(--card);
+  border: 2rpx solid var(--line);
+}
+.cat.on {
+  border-color: transparent;
+}
+.cat-e {
+  font-size: 24rpx;
+}
+.cat-n {
+  font-size: 24rpx;
+  font-weight: 800;
+  color: var(--ink-2);
+  letter-spacing: -0.4rpx;
+}
+.cat.on .cat-n {
+  color: var(--ink);
+}
+
+/* ---------- 输入形态切换 ---------- */
+.seg {
+  display: flex;
+  gap: 8rpx;
+  margin: 24rpx 36rpx 0;
+  padding: 8rpx;
+  background: var(--paper-2);
+  border-radius: var(--r-full);
+}
+.seg-i {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  height: 68rpx;
+  border-radius: var(--r-full);
+}
+.seg-i.on {
+  background: var(--ink);
+}
+.seg-e {
+  font-size: 22rpx;
+}
+.seg-t {
+  font-size: 24rpx;
+  font-weight: 800;
+  color: var(--ink-3);
+  letter-spacing: -0.4rpx;
+}
+.seg-i.on .seg-t {
+  color: #fff;
+}
+
+/* ---------- 面板通用 ---------- */
+.panel {
+  margin: 24rpx 36rpx 0;
+  padding: 28rpx 30rpx;
+  background: var(--card);
+  border-radius: var(--r-xl);
+  border: 1rpx solid var(--line-2);
+  box-shadow: var(--sh-1);
+}
+
+/* ---------- 文字 ---------- */
+.ta {
+  width: 100%;
+  min-height: 320rpx;
+  font-size: 30rpx;
+  line-height: 1.8;
+  color: var(--ink);
+  letter-spacing: 0.2rpx;
+}
+.ta-ph {
+  color: var(--ink-3);
+  font-size: 28rpx;
+  line-height: 1.8;
+}
+.ta-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid var(--line-2);
+}
+.ta-hint {
+  font-size: 19rpx;
+  color: var(--ink-3);
+}
+.ta-count {
+  font-size: 19rpx;
+  color: var(--ink-3);
+}
+.ta-count.warn {
+  color: var(--coral);
+  font-weight: 700;
+}
+
+/* ---------- 语音 ---------- */
+.voice-panel {
+  padding-top: 20rpx;
+}
+.mic-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 0 8rpx;
+}
+.mic-ring {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper-2);
+  transition: background 0.2s ease;
+}
+.mic-ring.on {
+  background: var(--coral-wash);
+}
+.mic {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--sh-2);
+}
+.mic.on {
+  background: var(--coral);
+  transform: scale(1.04);
+}
+.mic-e {
+  font-size: 58rpx;
+}
+.rec-time {
+  margin-top: 26rpx;
+  font-size: 32rpx;
+  font-weight: 800;
+  color: var(--ink-3);
+  letter-spacing: -0.6rpx;
+}
+.rec-time.on {
+  color: var(--ink);
+}
+.rec-hint {
+  margin-top: 6rpx;
+  font-size: 20rpx;
+  color: var(--ink-3);
+}
+
+.voice-btns {
+  margin-top: 28rpx;
+}
+.hold-btn {
+  height: 96rpx;
+  border-radius: var(--r-full);
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hold-btn.live {
+  background: var(--lime);
+}
+.hold-btn.cancel {
+  background: var(--coral);
+}
+.hold-t {
+  font-size: 28rpx;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1rpx;
+}
+.hold-btn.live .hold-t {
+  color: var(--ink);
+}
+
+/* 已录好 */
+.voice-card {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 22rpx 24rpx;
+  background: var(--paper-2);
+  border-radius: var(--r-lg);
+}
+.vc-play {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 50%;
+  background: var(--lime);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vc-ic {
+  font-size: 22rpx;
+  color: var(--ink);
+  font-weight: 800;
+}
+.vc-mid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+.vc-wave {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  height: 24rpx;
+}
+.vc-b {
+  width: 5rpx;
+  border-radius: 4rpx;
+  background: var(--ink-3);
+}
+.vc-t {
+  font-size: 19rpx;
+  color: var(--ink-3);
+}
+.vc-del {
+  font-size: 22rpx;
+  font-weight: 800;
+  color: var(--coral);
+  padding: 8rpx 12rpx;
+}
+.voice-tip {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 19rpx;
+  color: var(--ink-3);
+}
+
+/* ---------- 图片 ---------- */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+.cell {
+  width: 178rpx;
+  height: 178rpx;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  position: relative;
+  background: var(--paper-2);
+}
+.cell-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.cell-del {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: rgba(23, 22, 26, 0.66);
+  color: #fff;
+  font-size: 26rpx;
+  line-height: 38rpx;
+  text-align: center;
+}
+.cell.add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6rpx;
+  background: var(--paper);
+  border: 2rpx dashed var(--line);
+}
+.add-plus {
+  font-size: 44rpx;
+  color: var(--ink-3);
+  line-height: 1;
+}
+.add-t {
+  font-size: 18rpx;
+  color: var(--ink-3);
+}
+.img-tip {
+  display: block;
+  margin-top: 18rpx;
+  font-size: 19rpx;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+/* ---------- 区块（情绪 / 体重） ---------- */
+.block {
+  margin: 30rpx 36rpx 0;
+}
+.block-hd {
+  display: flex;
+  align-items: baseline;
+  gap: 12rpx;
+  margin-bottom: 14rpx;
+}
+.block-t {
+  font-size: 22rpx;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.4rpx;
+}
+
+/* 体重 */
+.w-add {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 24rpx 28rpx;
+  background: var(--card);
+  border-radius: var(--r-lg);
+  border: 2rpx dashed var(--line);
+}
+.w-add-plus {
+  font-size: 30rpx;
+  color: var(--ink-3);
+  line-height: 1;
+}
+.w-add-t {
+  font-size: 22rpx;
+  color: var(--ink-3);
+}
+.w-box {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  padding: 20rpx 22rpx;
+  background: var(--card);
+  border-radius: var(--r-lg);
+  border: 1rpx solid var(--line-2);
+}
+.w-step {
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 50%;
+  background: var(--paper-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: var(--ink);
+  font-weight: 700;
+}
+.w-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8rpx;
+}
+.w-input {
+  min-width: 140rpx;
+  text-align: center;
+  font-size: 52rpx;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -1.6rpx;
+}
+.w-ph {
+  color: var(--paper-3);
+}
+.w-unit {
+  font-size: 22rpx;
+  font-weight: 700;
+  color: var(--ink-3);
+}
+
+/* ---------- 底部 ---------- */
+.bottom-space {
+  height: 180rpx;
+}
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18rpx 36rpx 22rpx;
+  background: rgba(250, 246, 239, 0.94);
+  backdrop-filter: blur(20rpx);
+  border-top: 1rpx solid var(--line-2);
+}
+.bar-save {
+  height: 96rpx;
+  font-size: 30rpx;
+}
+
+/* 页面样式优先级高于 app.wxss，安全区要在这里补回来 */
+.bar.safe-bottom {
+  padding-bottom: calc(22rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(22rpx + env(safe-area-inset-bottom));
+}

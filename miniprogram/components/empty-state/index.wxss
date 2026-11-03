@@ -1,0 +1,72 @@
+.es {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 36rpx 20rpx;
+}
+
+.es-face {
+  width: 132rpx;
+  height: 132rpx;
+  border-radius: 48rpx;
+  background: #f2ebdf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56rpx;
+}
+
+.es-title {
+  font-size: 30rpx;
+  font-weight: 800;
+  letter-spacing: -0.4rpx;
+  color: #17161a;
+  margin-top: 28rpx;
+}
+
+.es-desc {
+  font-size: 22rpx;
+  color: #8e8b96;
+  line-height: 1.8;
+  text-align: center;
+  margin-top: 14rpx;
+  white-space: pre-line;
+}
+
+.es-btn {
+  margin-top: 30rpx;
+  min-width: 260rpx;
+  height: 80rpx;
+  border-radius: 999rpx;
+  background: #d8f45c;
+  color: #17161a;
+  font-size: 24rpx;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40rpx;
+  box-shadow: 0 12rpx 26rpx -16rpx rgba(150, 180, 20, 0.9);
+}
+
+.es-tip {
+  margin-top: 44rpx;
+  width: 100%;
+  background: #eff9c4;
+  border-radius: 28rpx;
+  padding: 24rpx 26rpx;
+}
+.es-tip-lbl {
+  display: block;
+  font-size: 17rpx;
+  font-weight: 800;
+  letter-spacing: 2rpx;
+  color: #6b7a1e;
+}
+.es-tip-txt {
+  display: block;
+  font-size: 21rpx;
+  line-height: 1.75;
+  color: #4c5714;
+  margin-top: 8rpx;
+}

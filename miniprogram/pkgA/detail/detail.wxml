@@ -1,0 +1,86 @@
+<view class="page">
+
+  <nav-bar title="这条记录" back="{{true}}" />
+
+  <view wx:if="{{loading}}" class="sk-box">
+    <skeleton rows="3" variant="card" />
+  </view>
+
+  <view wx:elif="{{missing}}" class="missing">
+    <text class="ms-e">🫥</text>
+    <text class="ms-t">这条记录不在了</text>
+    <text class="ms-d">可能已经被删掉了。</text>
+    <view class="ms-btn tap" bindtap="onBack">返回</view>
+  </view>
+
+  <block wx:else>
+
+    <!-- 元信息 -->
+    <view class="meta">
+      <view class="meta-l">
+        <view class="cat-pill" style="background:{{catWash}};">
+          <text class="cp-e">{{catEmoji}}</text>
+          <text class="cp-t">{{catName}}</text>
+        </view>
+        <view wx:if="{{moodName}}" class="mood-pill" style="background:{{moodColor}}22;">
+          <text class="mp-e">{{moodEmoji}}</text>
+          <text class="mp-t">{{moodName}}</text>
+        </view>
+      </view>
+      <view class="meta-r">
+        <text class="meta-day num">{{dayText}} {{weekText}}</text>
+        <text class="meta-time num">{{timeText}} · {{typeName}}</text>
+      </view>
+    </view>
+
+    <!-- 体重 -->
+    <view wx:if="{{weightText}}" class="weight-box">
+      <text class="wb-n num">{{weightText}}</text>
+      <text class="wb-u">kg</text>
+      <text class="wb-t">体重记录</text>
+    </view>
+
+    <!-- 正文 -->
+    <view wx:if="{{record.content}}" class="content-box">
+      <text class="content-tx">{{record.content}}</text>
+    </view>
+
+    <!-- 图片：缩略图内联，点击看原图 -->
+    <view wx:if="{{thumbs.length}}" class="imgs">
+      <image
+        wx:for="{{thumbs}}"
+        wx:key="index"
+        class="img {{thumbs.length === 1 ? 'single' : ''}}"
+        src="{{item}}"
+        mode="aspectFill"
+        lazy-load="{{true}}"
+        data-index="{{index}}"
+        bindtap="onPreview"
+      />
+      <text class="imgs-tip">点开可看原图</text>
+    </view>
+
+    <!-- 语音 -->
+    <view wx:if="{{voiceUrl}}" class="voice tap" bindtap="onPlayVoice">
+      <view class="v-play">
+        <text class="v-ic">{{playing ? '❚❚' : '▶'}}</text>
+      </view>
+      <view class="v-mid">
+        <view class="v-wave">
+          <view wx:for="{{[6,10,7,12,5,9,11,6,8,10,5,7,9,6,8,11]}}" wx:key="index" class="v-b" style="height:{{item * 3}}rpx;"></view>
+        </view>
+        <text class="v-t num">{{record.voice.duration}}″</text>
+      </view>
+      <text class="v-hint">{{playing ? '播放中' : '点击播放'}}</text>
+    </view>
+
+    <!-- 操作 -->
+    <view class="acts">
+      <view class="act-ghost tap" bindtap="onDelete">删除这条</view>
+      <view class="act-main tap" bindtap="goRecord">再记一笔</view>
+    </view>
+
+  </block>
+
+  <view class="bottom-space"></view>
+</view>

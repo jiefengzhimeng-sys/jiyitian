@@ -1,0 +1,59 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/timeline/timeline",
+    "pages/stats/stats",
+    "pages/profile/profile",
+    "pages/record/record"
+  ],
+  "subpackages": [
+    {
+      "root": "pkgA",
+      "name": "pkgA",
+      "pages": [
+        "summary/summary",
+        "checkin/checkin",
+        "detail/detail",
+        "settings/settings"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/home/home": {
+      "network": "all",
+      "packages": ["pkgA"]
+    },
+    "pages/stats/stats": {
+      "network": "all",
+      "packages": ["pkgA"]
+    }
+  },
+  "window": {
+    "navigationStyle": "custom",
+    "navigationBarTitleText": "记一天",
+    "navigationBarBackgroundColor": "#FAF6EF",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FAF6EF",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#8E8B96",
+    "selectedColor": "#17161A",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/home/home", "text": "今天" },
+      { "pagePath": "pages/timeline/timeline", "text": "时间线" },
+      { "pagePath": "pages/stats/stats", "text": "数据" },
+      { "pagePath": "pages/profile/profile", "text": "我的" }
+    ]
+  },
+  "usingComponents": {},
+  "requiredPrivateInfos": [],
+  "lazyCodeLoading": "requiredComponents",
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "permission": {}
+}

@@ -1,0 +1,248 @@
+.page {
+  min-height: 100vh;
+  background: var(--paper);
+  padding-bottom: 60rpx;
+}
+
+/* 类型切换 */
+.types {
+  display: flex;
+  gap: 8rpx;
+  margin: 4rpx 36rpx 0;
+  padding: 8rpx;
+  background: var(--paper-2);
+  border-radius: var(--r-full);
+}
+.ty {
+  flex: 1;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-full);
+}
+.ty.on {
+  background: var(--ink);
+}
+.ty-t {
+  font-size: 23rpx;
+  font-weight: 800;
+  color: var(--ink-3);
+  letter-spacing: -0.4rpx;
+}
+.ty.on .ty-t {
+  color: #fff;
+}
+
+.sk-box {
+  padding: 26rpx 36rpx 0;
+}
+
+/* ---------- 刊物封面 ---------- */
+.cover {
+  margin: 26rpx 36rpx 0;
+  padding: 30rpx 30rpx 28rpx;
+  background: linear-gradient(150deg, #1D1C22 0%, #26232C 62%, #332C3A 100%);
+  border-radius: var(--r-xl);
+  box-shadow: var(--sh-3);
+  position: relative;
+  overflow: hidden;
+}
+/* 右上角青柠光斑 */
+.cover::after {
+  content: '';
+  position: absolute;
+  right: -70rpx;
+  top: -70rpx;
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(216, 244, 92, 0.28) 0%, rgba(216, 244, 92, 0) 68%);
+}
+.cov-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cov-kicker {
+  font-size: 17rpx;
+  font-weight: 800;
+  letter-spacing: 4rpx;
+  color: var(--lime);
+}
+.cov-period {
+  font-size: 17rpx;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.6rpx;
+}
+.cov-title {
+  display: block;
+  margin-top: 24rpx;
+  font-size: 46rpx;
+  font-weight: 800;
+  line-height: 1.32;
+  letter-spacing: -1.8rpx;
+  color: #fff;
+}
+.cov-rule {
+  width: 72rpx;
+  height: 6rpx;
+  border-radius: 4rpx;
+  background: var(--lime);
+  margin: 22rpx 0 14rpx;
+}
+.cov-sub {
+  font-size: 18rpx;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ---------- 正文三块 ---------- */
+.body {
+  margin: 26rpx 36rpx 0;
+  padding: 4rpx 30rpx;
+  background: var(--card);
+  border-radius: var(--r-xl);
+  border: 1rpx solid var(--line-2);
+  box-shadow: var(--sh-1);
+}
+.bk {
+  padding: 26rpx 0;
+}
+.bk + .bk {
+  border-top: 1rpx solid var(--line-2);
+}
+.bk-hd {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+.bk-lbl {
+  font-size: 20rpx;
+  font-weight: 800;
+  letter-spacing: 2.4rpx;
+  color: var(--ink-3);
+}
+.bk-no {
+  font-size: 18rpx;
+  color: var(--paper-3);
+  font-weight: 700;
+}
+.bk-tx {
+  display: block;
+  font-size: 25rpx;
+  line-height: 1.9;
+  color: var(--ink-2);
+  letter-spacing: 0.2rpx;
+}
+
+/* ---------- 曲线 ---------- */
+.curve {
+  margin: 24rpx 36rpx 0;
+  padding: 24rpx 26rpx 12rpx;
+  background: var(--card);
+  border-radius: var(--r-lg);
+  border: 1rpx solid var(--line-2);
+}
+.cv-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+.cv-t {
+  font-size: 22rpx;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.4rpx;
+}
+.cv-ar {
+  font-size: 18rpx;
+  color: var(--ink-3);
+}
+
+/* ---------- 标签 ---------- */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin: 22rpx 36rpx 0;
+}
+.tag {
+  padding: 10rpx 20rpx;
+  border-radius: var(--r-full);
+  background: var(--lime-wash);
+  border: 1rpx solid rgba(185, 214, 47, 0.45);
+}
+.tag-t {
+  font-size: 18rpx;
+  font-weight: 700;
+  color: #6B7A16;
+}
+
+/* ---------- 操作 ---------- */
+.acts {
+  margin: 32rpx 36rpx 0;
+}
+.act-main {
+  height: 92rpx;
+  border-radius: var(--r-full);
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 27rpx;
+  font-weight: 800;
+  letter-spacing: 0.4rpx;
+}
+.act-main.disabled {
+  opacity: 0.5;
+}
+
+.disclaimer {
+  display: block;
+  margin: 22rpx 52rpx 0;
+  text-align: center;
+  font-size: 17rpx;
+  line-height: 1.7;
+  color: var(--ink-3);
+}
+
+/* ---------- 数据不足 ---------- */
+.few {
+  margin: 60rpx 52rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+}
+.few-e {
+  font-size: 72rpx;
+  line-height: 1;
+}
+.few-t {
+  font-size: 30rpx;
+  font-weight: 800;
+  letter-spacing: -0.8rpx;
+  color: var(--ink);
+}
+.few-d {
+  font-size: 21rpx;
+  line-height: 1.8;
+  color: var(--ink-3);
+  text-align: center;
+}
+.few-btn {
+  margin-top: 22rpx;
+  padding: 18rpx 44rpx;
+  border-radius: var(--r-full);
+  background: var(--lime);
+  font-size: 24rpx;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.bottom-space {
+  height: 40rpx;
+}

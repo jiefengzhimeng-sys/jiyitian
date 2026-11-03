@@ -1,0 +1,83 @@
+<view class="page">
+
+  <nav-bar title="" />
+
+  <view class="hd">
+    <text class="h-big">时间线</text>
+    <text class="hd-sub num">{{rangeText}}</text>
+  </view>
+
+  <!-- 范围切换 -->
+  <view class="modes">
+    <view
+      wx:for="{{modes}}"
+      wx:key="key"
+      class="mode tap {{mode === item.key ? 'on' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="onModeTap"
+    >
+      <text class="mode-t">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 分类筛选 -->
+  <scroll-view class="filters" scroll-x enable-flex show-scrollbar="{{false}}">
+    <view
+      wx:for="{{filters}}"
+      wx:key="key"
+      class="fl tap {{filter === item.key ? 'on' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="onFilterTap"
+    >
+      <text class="fl-t">{{item.name}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- 骨架 -->
+  <view wx:if="{{loading}}" class="skeleton-box">
+    <skeleton rows="4" variant="list" />
+  </view>
+
+  <!-- 空态 -->
+  <empty-state
+    wx:elif="{{isEmpty}}"
+    emoji="🗓"
+    title="这段时间还是空的"
+    desc="换个时间范围看看，或者现在就补一笔。"
+    btnText="去记录"
+    bind:action="goRecord"
+  />
+
+  <!-- 分组列表 -->
+  <block wx:else>
+    <view wx:for="{{groups}}" wx:key="dayKey" class="group">
+      <view class="g-hd">
+        <view class="g-hd-l">
+          <text class="g-day num">{{item.label}}</text>
+          <text class="g-week">{{item.weekday}}</text>
+        </view>
+        <text class="g-count num">{{item.count}} 条</text>
+      </view>
+
+      <view class="g-line"></view>
+
+      <view class="g-body">
+        <view wx:for="{{item.items}}" wx:for-item="rec" wx:key="_id" class="g-item">
+          <view class="g-dot" style="background:{{rec.category === 'sport' ? '#7CC5FF' : rec.category === 'diet' ? '#4FD8A4' : rec.category === 'mood' ? '#FFC857' : '#B9A7FF'}};"></view>
+          <view class="g-card">
+            <record-card record="{{rec}}" mode="timeline" bind:recordtap="onRecordTap" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载状态 -->
+    <view class="load-more">
+      <text wx:if="{{loadingMore}}" class="lm-t">正在翻旧记录…</text>
+      <text wx:elif="{{!hasMore}}" class="lm-t">到这里就是全部了</text>
+      <text wx:else class="lm-t">上滑看更早</text>
+    </view>
+  </block>
+
+  <view class="tabbar-space"></view>
+</view>

@@ -1,0 +1,257 @@
+.page {
+  min-height: 100vh;
+  background: var(--paper);
+  padding-bottom: 40rpx;
+}
+.sk-box {
+  padding: 26rpx 36rpx 0;
+}
+
+/* 元信息 */
+.meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18rpx;
+  padding: 6rpx 36rpx 0;
+}
+.meta-l {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.cat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 10rpx 20rpx;
+  border-radius: var(--r-full);
+}
+.cp-e {
+  font-size: 22rpx;
+}
+.cp-t {
+  font-size: 21rpx;
+  font-weight: 800;
+  color: var(--ink);
+}
+.mood-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 10rpx 18rpx;
+  border-radius: var(--r-full);
+}
+.mp-e {
+  font-size: 20rpx;
+}
+.mp-t {
+  font-size: 20rpx;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.meta-r {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3rpx;
+}
+.meta-day {
+  font-size: 19rpx;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.meta-time {
+  font-size: 17rpx;
+  color: var(--ink-3);
+}
+
+/* 体重块 */
+.weight-box {
+  display: flex;
+  align-items: baseline;
+  gap: 8rpx;
+  margin: 24rpx 36rpx 0;
+  padding: 26rpx 30rpx;
+  border-radius: var(--r-lg);
+  background: var(--lilac-wash);
+}
+.wb-n {
+  font-size: 68rpx;
+  font-weight: 800;
+  letter-spacing: -2.4rpx;
+  color: var(--ink);
+  line-height: 1;
+}
+.wb-u {
+  font-size: 22rpx;
+  font-weight: 800;
+  color: var(--ink-2);
+}
+.wb-t {
+  margin-left: auto;
+  font-size: 18rpx;
+  color: var(--ink-3);
+}
+
+/* 正文 */
+.content-box {
+  margin: 24rpx 36rpx 0;
+  padding: 30rpx 30rpx 32rpx;
+  background: var(--card);
+  border-radius: var(--r-xl);
+  border: 1rpx solid var(--line-2);
+  box-shadow: var(--sh-1);
+}
+.content-tx {
+  font-size: 29rpx;
+  line-height: 1.95;
+  color: var(--ink);
+  letter-spacing: 0.4rpx;
+  white-space: pre-wrap;
+}
+
+/* 图片 */
+.imgs {
+  margin: 24rpx 36rpx 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+.img {
+  width: calc((100% - 24rpx) / 3);
+  height: 200rpx;
+  border-radius: var(--r-md);
+  background: var(--paper-2);
+}
+.img.single {
+  width: 100%;
+  height: 420rpx;
+}
+.imgs-tip {
+  width: 100%;
+  margin-top: 4rpx;
+  font-size: 17rpx;
+  color: var(--ink-3);
+}
+
+/* 语音 */
+.voice {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  margin: 24rpx 36rpx 0;
+  padding: 24rpx 26rpx;
+  background: var(--card);
+  border-radius: var(--r-lg);
+  border: 1rpx solid var(--line-2);
+}
+.v-play {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: var(--lime);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+.v-ic {
+  font-size: 22rpx;
+  font-weight: 800;
+  color: var(--ink);
+}
+.v-mid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+.v-wave {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  height: 36rpx;
+}
+.v-b {
+  width: 5rpx;
+  border-radius: 4rpx;
+  background: var(--ink-3);
+}
+.v-t {
+  font-size: 18rpx;
+  color: var(--ink-3);
+}
+.v-hint {
+  font-size: 18rpx;
+  color: var(--ink-3);
+}
+
+/* 操作 */
+.acts {
+  display: flex;
+  gap: 14rpx;
+  margin: 40rpx 36rpx 0;
+}
+.act-ghost {
+  flex: 1;
+  height: 88rpx;
+  border-radius: var(--r-full);
+  border: 2rpx solid var(--line);
+  color: var(--coral);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: 800;
+}
+.act-main {
+  flex: 1.2;
+  height: 88rpx;
+  border-radius: var(--r-full);
+  background: var(--ink);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: 800;
+}
+
+/* 缺失 */
+.missing {
+  margin: 140rpx 52rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+}
+.ms-e {
+  font-size: 72rpx;
+  line-height: 1;
+}
+.ms-t {
+  font-size: 30rpx;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.8rpx;
+}
+.ms-d {
+  font-size: 21rpx;
+  color: var(--ink-3);
+}
+.ms-btn {
+  margin-top: 24rpx;
+  padding: 18rpx 48rpx;
+  border-radius: var(--r-full);
+  background: var(--ink);
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: 800;
+}
+
+.bottom-space {
+  height: 40rpx;
+}

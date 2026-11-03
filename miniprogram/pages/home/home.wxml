@@ -1,0 +1,78 @@
+<view class="page">
+
+  <nav-bar title="" />
+
+  <!-- 招呼 + 连续打卡 -->
+  <view class="top">
+    <view class="hi">
+      <text class="hi-txt">{{greeting}}，<text class="hi-name">阿柠</text></text>
+      <view class="streak tap" bindtap="goCheckin">
+        <text class="flame">🔥</text>
+        <text class="num streak-n">{{streak}}</text>
+        <text class="streak-u">天</text>
+      </view>
+    </view>
+    <text class="date num">{{dateText}}</text>
+  </view>
+
+  <!-- 情绪天气卡 -->
+  <view class="mood-card">
+    <text class="lbl mood-lbl">Today's Weather</text>
+    <text class="mood-title">{{moodTitle}}</text>
+    <text class="mood-desc">{{moodDesc}}</text>
+    <view class="mood-face">{{moodEmoji}}</view>
+    <view class="mood-bars">
+      <view
+        wx:for="{{bars}}"
+        wx:key="index"
+        class="mb {{index === bars.length - 1 ? 'now' : ''}}"
+        style="height:{{item}}%;"
+      ></view>
+    </view>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick">
+    <view
+      wx:for="{{quick}}"
+      wx:key="key"
+      class="q tap"
+      data-key="{{item.key}}"
+      bindtap="onQuickTap"
+    >
+      <view class="sq" style="background:{{item.wash}};">{{item.emoji}}</view>
+      <text class="q-t">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 今日记录 -->
+  <view class="rec-hd">
+    <text class="h-sec">今天记了 {{records.length}} 条</text>
+    <text wx:if="{{hasRecords}}" class="more" bindtap="goTimeline">全部 ›</text>
+  </view>
+
+  <view wx:if="{{loading}}" class="rec-list">
+    <skeleton rows="3" variant="list" />
+  </view>
+
+  <block wx:elif="{{hasRecords}}">
+    <view class="rec-list">
+      <view wx:for="{{records}}" wx:key="_id" class="rec-item">
+        <record-card record="{{item}}" mode="feed" bind:recordtap="onRecordTap" />
+      </view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <empty-state
+      emoji="🌱"
+      title="今天还是空白页"
+      desc="不用写很多。{{'\n'}}一句话、一张照片，都算今天的痕迹。"
+      btnText="记下第一笔"
+      tip="记录满 3 天后，AI 会开始帮你找规律——比如哪种运动后睡得更好。"
+      bind:action="goRecord"
+    />
+  </block>
+
+  <view class="tabbar-space"></view>
+</view>

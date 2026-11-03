@@ -1,0 +1,11 @@
+<view class="es">
+  <view class="es-face">{{emoji}}</view>
+  <text class="es-title">{{title}}</text>
+  <text wx:if="{{desc}}" class="es-desc">{{desc}}</text>
+  <view wx:if="{{btnText}}" class="es-btn tap" bindtap="onAction">{{btnText}}</view>
+
+  <view wx:if="{{tip}}" class="es-tip">
+    <text class="es-tip-lbl">小提示</text>
+    <text class="es-tip-txt">{{tip}}</text>
+  </view>
+</view>

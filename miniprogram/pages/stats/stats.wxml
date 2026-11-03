@@ -1,0 +1,139 @@
+<view class="page">
+
+  <nav-bar title="" />
+
+  <view class="hd">
+    <view class="hd-l">
+      <text class="lbl">Insights</text>
+      <text class="h-big">数据</text>
+    </view>
+    <view class="ranges">
+      <view
+        wx:for="{{ranges}}"
+        wx:key="key"
+        class="rg tap {{range === item.key ? 'on' : ''}}"
+        data-key="{{item.key}}"
+        bindtap="onRangeTap"
+      >
+        <text class="rg-t">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="sk-box">
+    <skeleton rows="3" variant="card" />
+    <skeleton rows="2" variant="card" />
+  </view>
+
+  <block wx:else>
+
+    <!-- 四宫格概览 -->
+    <view class="overview">
+      <view class="ov">
+        <text class="ov-n num">{{totalRecords}}</text>
+        <text class="ov-l">条记录</text>
+      </view>
+      <view class="ov">
+        <text class="ov-n num">{{sportDays}}</text>
+        <text class="ov-l">天有运动</text>
+      </view>
+      <view class="ov">
+        <text class="ov-n num">{{dietCount}}</text>
+        <text class="ov-l">次饮食</text>
+      </view>
+      <view class="ov">
+        <text class="ov-n num">{{streak}}</text>
+        <text class="ov-l">连续天数</text>
+      </view>
+    </view>
+
+    <!-- ============ 体重曲线 ============ -->
+    <view class="card-block">
+      <view class="cb-hd">
+        <view class="cb-hd-l">
+          <text class="cb-t">体重</text>
+          <text class="cb-sub">按天取最后一次测量</text>
+        </view>
+      </view>
+
+      <block wx:if="{{hasWeight}}">
+        <view class="w-row">
+          <view class="w-main">
+            <text class="w-cur num">{{weightCur}}</text>
+            <text class="w-unit">kg</text>
+          </view>
+          <view class="w-delta {{weightTrend}}">
+            <text class="wd-ar">{{weightTrend === 'up' ? '↗' : weightTrend === 'down' ? '↘' : '→'}}</text>
+            <text class="wd-t">{{weightDeltaText}}</text>
+          </view>
+        </view>
+        <view class="chart-box">
+          <chart type="line" series="{{weightSeries}}" height="{{180}}" />
+        </view>
+      </block>
+
+      <view wx:else class="mini-empty">
+        <text class="me-t">还没有体重记录</text>
+        <text class="me-d">记两天以上，这里就会连成一条线</text>
+        <view class="me-btn tap" bindtap="goRecord">记一下体重</view>
+      </view>
+    </view>
+
+    <!-- ============ 情绪分布 ============ -->
+    <view class="card-block">
+      <view class="cb-hd">
+        <view class="cb-hd-l">
+          <text class="cb-t">情绪</text>
+          <text class="cb-sub">这段时间的心情构成</text>
+        </view>
+      </view>
+
+      <block wx:if="{{hasMood}}">
+        <view class="mood-row">
+          <view class="ring-box">
+            <chart type="ring" segments="{{moodSegments}}" centerText="{{moodTopEmoji}}" height="{{150}}" />
+          </view>
+          <view class="mood-side">
+            <text class="ms-top">{{moodTopText}}</text>
+            <view class="ms-legend">
+              <view wx:for="{{moodDist}}" wx:key="key" class="lg">
+                <view class="lg-dot" style="background:{{item.color}};"></view>
+                <text class="lg-n">{{item.name}}</text>
+                <text class="lg-p num">{{item.percent}}%</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+
+      <view wx:else class="mini-empty small">
+        <text class="me-d">{{moodTopText}}</text>
+      </view>
+    </view>
+
+    <!-- ============ 饮食频次 ============ -->
+    <view class="card-block">
+      <view class="cb-hd">
+        <view class="cb-hd-l">
+          <text class="cb-t">饮食</text>
+          <text class="cb-sub">每天记了几次</text>
+        </view>
+      </view>
+      <view class="chart-box">
+        <chart type="bar" series="{{dietSeries}}" height="{{150}}" highlightLast="{{1}}" />
+      </view>
+    </view>
+
+    <!-- 引导去 AI 总结 -->
+    <view class="ai-hint tap" bindtap="goSummary">
+      <view class="ah-l">
+        <text class="ah-t">让 AI 把这些曲线读成一句话</text>
+        <text class="ah-d">月总结会告诉你体重、饮食、情绪之间有没有关联</text>
+      </view>
+      <text class="ah-ar">›</text>
+    </view>
+
+  </block>
+
+  <view class="tabbar-space"></view>
+</view>

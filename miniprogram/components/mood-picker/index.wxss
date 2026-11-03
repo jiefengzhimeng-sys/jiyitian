@@ -1,0 +1,43 @@
+.moods {
+  display: flex;
+  justify-content: space-between;
+}
+
+.m {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* 触控区不小于 44×44pt */
+  padding: 6rpx 0;
+}
+
+.f {
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  border: 3rpx solid transparent;
+  transition: all 0.16s ease;
+}
+
+/* 选中：青柠外环，不改底色以保留情绪色识别 */
+.m.on .f {
+  border-color: #17161a;
+  box-shadow: 0 0 0 6rpx #fff, 0 0 0 10rpx #d8f45c;
+}
+
+.n {
+  font-size: 17rpx;
+  color: #8e8b96;
+  margin-top: 8rpx;
+  line-height: 1.2;
+}
+
+.m.on .n {
+  color: #17161a;
+  font-weight: 800;
+}

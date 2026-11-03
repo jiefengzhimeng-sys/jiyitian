@@ -1,0 +1,136 @@
+<view class="page">
+
+  <nav-bar title="" />
+
+  <!-- 头部 -->
+  <view class="hero">
+    <view class="avatar">{{avatarEmoji}}</view>
+    <view class="hero-info">
+      <text class="hero-name">{{nickname}}</text>
+      <text class="hero-sub num">{{since ? since + ' 加入 · 第 ' + daysTogether + ' 天' : '今天开始记'}}</text>
+    </view>
+    <view class="hero-streak tap" bindtap="goCheckin">
+      <text class="hs-n num">{{streak}}</text>
+      <text class="hs-l">连续天</text>
+    </view>
+  </view>
+
+  <!-- 统计 -->
+  <view class="stats">
+    <view class="st">
+      <text class="st-n num">{{totalRecords}}</text>
+      <text class="st-l">条记录</text>
+    </view>
+    <view class="st">
+      <text class="st-n num">{{photoCount}}</text>
+      <text class="st-l">条带照片</text>
+    </view>
+    <view class="st">
+      <text class="st-n num">{{voiceCount}}</text>
+      <text class="st-l">条语音</text>
+    </view>
+  </view>
+
+  <!-- 快捷 -->
+  <view class="quick-row">
+    <view class="qr tap" bindtap="goCheckin">
+      <text class="qr-e">🏆</text>
+      <text class="qr-t">打卡</text>
+    </view>
+    <view class="qr tap" bindtap="goSummary">
+      <text class="qr-e">🤖</text>
+      <text class="qr-t">AI 总结</text>
+    </view>
+    <view class="qr tap" bindtap="goSettings">
+      <text class="qr-e">⚙️</text>
+      <text class="qr-t">设置</text>
+    </view>
+  </view>
+
+  <!-- 设置组 -->
+  <view class="group">
+    <text class="lbl group-lbl">Preferences</text>
+
+    <view class="row">
+      <view class="row-l">
+        <text class="row-t">AI 日/周/月总结</text>
+        <text class="row-d">周期结束后自动生成，仅你可见</text>
+      </view>
+      <switch
+        checked="{{aiSummary}}"
+        color="#D8F45C"
+        data-field="aiSummary"
+        bindchange="onToggle"
+      />
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="row">
+      <view class="row-l">
+        <text class="row-t">每日记录提醒</text>
+        <text class="row-d">21:30 提醒你补一笔</text>
+      </view>
+      <switch
+        checked="{{reminder}}"
+        color="#D8F45C"
+        data-field="reminder"
+        bindchange="onToggle"
+      />
+    </view>
+
+    <view wx:if="{{reminder}}" class="row sub">
+      <text class="row-t small">提醒时间</text>
+      <picker mode="time" value="{{reminderTime}}" bindchange="onPickTime">
+        <view class="picker-val num">{{reminderTime}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="group">
+    <text class="lbl group-lbl">Data</text>
+
+    <view class="row tap" bindtap="goPrivacy">
+      <view class="row-l">
+        <text class="row-t">隐私与数据</text>
+        <text class="row-d">用户隐私保护指引、数据删除</text>
+      </view>
+      <text class="ar">›</text>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="row tap" bindtap="onExport">
+      <view class="row-l">
+        <text class="row-t">导出我的记录</text>
+        <text class="row-d">V1.1 开放</text>
+      </view>
+      <text class="ar">›</text>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="row tap" bindtap="goSettings">
+      <view class="row-l">
+        <text class="row-t">回收站</text>
+        <text class="row-d">删除的记录保留 30 天</text>
+      </view>
+      <text class="ar">›</text>
+    </view>
+  </view>
+
+  <!-- 开发期辅助 -->
+  <view wx:if="{{useMock}}" class="dev">
+    <view class="dev-tag">
+      <text class="dev-dot"></text>
+      <text class="dev-t">当前是演示数据（本地 Mock）</text>
+    </view>
+    <view class="dev-btn tap" bindtap="onResetMock">
+      <text>重置演示数据</text>
+    </view>
+  </view>
+
+  <view class="ver num">记一天 v{{version}}</view>
+
+  <view class="tabbar-space"></view>
+</view>

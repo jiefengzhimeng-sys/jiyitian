@@ -1,0 +1,1 @@
+<canvas type="2d" class="cv" style="height:{{height}}px;width:100%;"></canvas>

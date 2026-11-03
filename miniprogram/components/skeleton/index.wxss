@@ -1,0 +1,40 @@
+.sk-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+
+.sk-row {
+  display: flex;
+  gap: 18rpx;
+  align-items: center;
+  background: #fff;
+  border: 1rpx solid #f0ebe0;
+  border-radius: 36rpx;
+  padding: 24rpx;
+}
+
+.sk-dot {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 22rpx;
+  flex: none;
+}
+
+.sk-body {
+  flex: 1;
+}
+
+.sk-line {
+  height: 18rpx;
+  border-radius: 10rpx;
+}
+.sk-line.sub {
+  height: 16rpx;
+  margin-top: 14rpx;
+}
+
+.sk-card {
+  height: 220rpx;
+  border-radius: 44rpx;
+}

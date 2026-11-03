@@ -1,0 +1,175 @@
+<view class="page">
+
+  <nav-bar title="记录" back="{{true}}" />
+
+  <!-- 顶部：日期 + 丢弃草稿 -->
+  <view class="hd">
+    <view class="hd-l">
+      <text class="lbl">New Entry</text>
+      <text class="hd-date num">{{dateText}}</text>
+    </view>
+    <view wx:if="{{draftRestored}}" class="draft-chip tap" bindtap="onDiscardDraft">
+      <text class="draft-dot"></text>
+      <text class="draft-t">已恢复草稿</text>
+      <text class="draft-x">×</text>
+    </view>
+  </view>
+
+  <!-- 分类 -->
+  <scroll-view class="cats" scroll-x enable-flex show-scrollbar="{{false}}">
+    <view
+      wx:for="{{categories}}"
+      wx:key="key"
+      class="cat tap {{category === item.key ? 'on' : ''}}"
+      style="{{category === item.key ? 'background:' + item.color + ';border-color:' + item.color : ''}}"
+      data-key="{{item.key}}"
+      bindtap="onCategoryTap"
+    >
+      <text class="cat-e">{{item.emoji}}</text>
+      <text class="cat-n">{{item.name}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- 输入形态切换 -->
+  <view class="seg">
+    <view
+      wx:for="{{inputTabs}}"
+      wx:key="key"
+      class="seg-i tap {{tab === item.key ? 'on' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="onTabChange"
+    >
+      <text class="seg-e">{{item.emoji}}</text>
+      <text class="seg-t">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- ============ 文字 ============ -->
+  <view wx:if="{{tab === 'text'}}" class="panel">
+    <textarea
+      class="ta"
+      value="{{content}}"
+      placeholder="今天发生了什么？跑步、吃的好吃的、忽然的一个念头……"
+      placeholder-class="ta-ph"
+      maxlength="{{maxLen}}"
+      show-confirm-bar="{{false}}"
+      adjust-position="{{true}}"
+      cursor-spacing="40"
+      bindinput="onInput"
+    />
+    <view class="ta-foot">
+      <text class="ta-hint">写给自己看，不用完整</text>
+      <text class="ta-count num {{content.length > maxLen - 50 ? 'warn' : ''}}">{{content.length}}/{{maxLen}}</text>
+    </view>
+  </view>
+
+  <!-- ============ 语音 ============ -->
+  <view wx:if="{{tab === 'voice'}}" class="panel voice-panel">
+
+    <block wx:if="{{!voice}}">
+      <view class="mic-wrap">
+        <view class="mic-ring {{recording ? 'on' : ''}}">
+          <view class="mic {{recording ? 'on' : ''}}">
+            <text class="mic-e">🎙️</text>
+          </view>
+        </view>
+        <text class="rec-time num {{recording ? 'on' : ''}}">
+          {{recording ? '00:' + (recordSec < 10 ? '0' + recordSec : recordSec) : '按住说话'}}
+        </text>
+        <text class="rec-hint">{{recording ? (willCancel ? '松开取消' : '上滑取消') : '最长 60 秒，说完松手'}}</text>
+      </view>
+
+      <view class="voice-btns">
+        <view
+          class="hold-btn tap {{recording ? (willCancel ? 'cancel' : 'live') : ''}}"
+          bindtouchstart="onVoiceStart"
+          bindtouchmove="onVoiceMove"
+          bindtouchend="onVoiceEnd"
+          bindtouchcancel="onVoiceEnd"
+        >
+          <text class="hold-t">{{recording ? (willCancel ? '松开取消' : '松开结束') : '按住 说话'}}</text>
+        </view>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="voice-card">
+        <view class="vc-l tap" bindtap="onPlayVoice">
+          <view class="vc-play">
+            <text class="vc-ic">{{playing ? '❚❚' : '▶'}}</text>
+          </view>
+        </view>
+        <view class="vc-mid">
+          <view class="vc-wave">
+            <view wx:for="{{[6,10,7,12,5,9,11,6,8,10,5,7,9,6]}}" wx:key="index" class="vc-b" style="height:{{item * 2}}rpx;"></view>
+          </view>
+          <text class="vc-t num">{{voice.duration}}″ 已录好</text>
+        </view>
+        <text class="vc-del tap" bindtap="onRemoveVoice">重录</text>
+      </view>
+      <text class="voice-tip">语音会转成随笔保留，AI 分析时也能读到</text>
+    </block>
+  </view>
+
+  <!-- ============ 图片 ============ -->
+  <view wx:if="{{tab === 'image'}}" class="panel">
+    <view class="grid">
+      <view wx:for="{{images}}" wx:key="path" class="cell">
+        <image class="cell-img" src="{{item.path}}" mode="aspectFill" data-index="{{index}}" bindtap="onPreviewImage" />
+        <view class="cell-del tap" data-index="{{index}}" catchtap="onRemoveImage">×</view>
+      </view>
+      <view wx:if="{{images.length < maxImages}}" class="cell add tap" bindtap="chooseImages">
+        <text class="add-plus">＋</text>
+        <text class="add-t">{{uploading ? '处理中' : images.length + '/' + maxImages}}</text>
+      </view>
+    </view>
+    <text class="img-tip">最多 {{maxImages}} 张。列表里看的是压缩图，点开放大才是原图。</text>
+  </view>
+
+  <!-- ============ 情绪 ============ -->
+  <view class="block">
+    <view class="block-hd">
+      <text class="lbl">Mood</text>
+      <text class="block-t">此刻的心情</text>
+    </view>
+    <mood-picker value="{{mood}}" bind:change="onMoodChange" />
+  </view>
+
+  <!-- ============ 体重 ============ -->
+  <view class="block">
+    <view class="block-hd">
+      <text class="lbl">Weight</text>
+      <text class="block-t">体重（可选）</text>
+    </view>
+
+    <view wx:if="{{!weightOpen}}" class="w-add tap" bindtap="toggleWeight">
+      <text class="w-add-plus">＋</text>
+      <text class="w-add-t">记一下体重，AI 会帮你连成趋势</text>
+    </view>
+
+    <view wx:else class="w-box">
+      <view class="w-step tap" data-delta="-0.1" bindtap="stepWeight">−</view>
+      <view class="w-input-wrap">
+        <input
+          class="w-input num"
+          type="digit"
+          value="{{weight}}"
+          placeholder="60.0"
+          placeholder-class="w-ph"
+          bindinput="onWeightInput"
+        />
+        <text class="w-unit">kg</text>
+      </view>
+      <view class="w-step tap" data-delta="0.1" bindtap="stepWeight">＋</view>
+    </view>
+  </view>
+
+  <view class="bottom-space"></view>
+
+  <!-- 底部操作条 -->
+  <view class="bar safe-bottom">
+    <view class="bar-save btn btn-lime tap {{saving ? 'disabled' : ''}}" bindtap="onSubmit">
+      <text>{{saving ? '保存中…' : '记下来'}}</text>
+    </view>
+  </view>
+</view>
